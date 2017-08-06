@@ -101,7 +101,7 @@ function PortfolioRow(data) {
 
   self.updatePrice = function(newPrice) {
     var delta = (newPrice - self.price()).toFixed(2);
-    self.arrow((delta < 0) ? '<i class="icon-arrow-down"></i>' : '<i class="icon-arrow-up"></i>');
+    self.arrow((delta < 0) ? '<i class="glyphicon glyphicon-arrow-down"></i>' : '<i class="glyphicon glyphicon-arrow-up"></i>');
     self.change((delta / self.price() * 100).toFixed(2));
     self.price(newPrice);
   };
