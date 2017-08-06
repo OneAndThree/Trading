@@ -108,7 +108,7 @@
     <script src="portfolio.js"></script>
     <script type="text/javascript">
       (function() {
-        var socket = new SockJS('/portfolio');
+        var socket = new SockJS('/Trading/portfolio');
         var stompClient = Stomp.over(socket);
 
         var appModel = new ApplicationModel(stompClient);
