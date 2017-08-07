@@ -63,6 +63,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/spring.xml
 			/WEB-INF/spring-security.xml
+			<!--/WEB-INF/spring-activemq.xml-->
 			<!--classpath:spring-mybatis.xml-->
 		</param-value>
 	</context-param>

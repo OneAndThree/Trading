@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd" default-autowire="byName">
+
+
+
+        <!--连接172.16.18.145-->
+        <bean id="jmsConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
+              <property name="connectionFactory">
+                     <bean class="org.apache.activemq.ActiveMQConnectionFactory">
+                            <property name="brokerURL" value="tcp://localhost:61616?wireFormat.maxInactivityDuration=0?wireFormat.maxInactivityDurationInitalDelay=30000?tcpNoDelay=true" />
+                            <property name="closeTimeout" value="600000" />
+                            <property name="userName" value="admin" />
+                            <property name="password" value="admin" />
+                            <!--<property name="optimizeAcknowledge" value="true" />-->
+                            <!--jms 连接池-optimizedAckScheduledAckInterval:消息确认周期-->
+
+                            <property name="useAsyncSend" value="true" />
+
+                            <!--使用异步。session接受的消息，将会首先放入session buffer中(队列)，
+                            那么此后的线程池将会负责移除buffer中的消息，并转发给相应的consumer-->
+                            <property name="alwaysSessionAsync" value="true" />
+
+                            <!--alwaysSessionAsync为true时设置-->
+                            <property name="maxThreadPoolSize" value="1000"/>
+
+                            <!--异步转发提高消费速度-->
+                            <property name="dispatchAsync" value="true"/>
+
+                            <property name="optimizeAcknowledge" value="true"/>
+                            <!--优化ack策略，ack最大超时时间-->
+                            <property name="optimizeAcknowledgeTimeOut" value="3000"/>
+
+                            <property name="optimizedAckScheduledAckInterval" value="10000" />
+
+                     </bean>
+              </property>
+              <property name="maxConnections" value="100"></property>
+        </bean>
+
+
+        <!--交易请求队列-->
+        <bean id="tradeQueue" name="tradeQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg index="0" value="tradeQueue"/>
+        </bean>
+        <!--交易请求监听器-->
+        <bean id="tradeListener" class="com.citi.training.activemq.TradeListener" />
+        <bean id="traderMessageListener"
+              class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+            <constructor-arg>
+                <ref bean="tradeListener" />
+            </constructor-arg>
+        </bean>
+
+        <!--消息接受容器-->
+        <bean id="traderContainer"
+             class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+              <property name="connectionFactory" ref="jmsConnectionFactory" />
+              <property name="destination" ref="tradeQueue" />
+              <property name="messageListener" ref="traderMessageListener" />
+              <property name="concurrentConsumers" value="1"/>
+              <property name="sessionTransacted" value="false" />
+              <property name="sessionAcknowledgeMode" value="1"/>
+              <property name="subscriptionDurable" value="false"/>
+              <property name="maxMessagesPerTask" value="-1" />
+              <property name="receiveTimeout" value="3000" />
+              <property name="cacheLevel" value="3"/>
+              <!--<property name="taskExecutor" ref="taskExecutor"/>-->
+        </bean>
+
+    <!--线程池,可被多个Container共用-->
+    <!--<bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">-->
+    <!--&lt;!&ndash; 核心线程数，默认为1 &ndash;&gt;-->
+    <!--<property name="corePoolSize" value="20" />-->
+    <!--&lt;!&ndash; 最大线程数，默认为Integer.MAX_VALUE &ndash;&gt;-->
+    <!--<property name="maxPoolSize" value="1000"/>-->
+    <!--&lt;!&ndash; 队列最大长度，一般需要设置值>=notifyScheduledMainExecutor.maxNum；默认为Integer.MAX_VALUE &ndash;&gt;-->
+    <!--<property name="queueCapacity" value="1000"/>-->
+    <!--&lt;!&ndash; 线程池维护线程所允许的空闲时间，默认为60s &ndash;&gt;-->
+    <!--<property name="keepAliveSeconds" value="300"/>-->
+    <!--</bean>-->
+</beans>
