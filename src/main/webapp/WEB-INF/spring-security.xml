@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns="http://www.springframework.org/schema/security"
+         xmlns:b="http://www.springframework.org/schema/beans"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <http pattern="/**/*.jpg" security="none"/>
+    <http pattern="/**/*.png" security="none"/>
+    <http pattern="/**/*.gif" security="none"/>
+    <http pattern="/**/*.css" security="none"/>
+    <http pattern="/**/*.js" security="none"/>
+    <http pattern="/lib/**" security="none"/>
+    <http pattern="/css/**" security="none"/>
+    <http pattern="/js/**" security="none"/>
+    <http pattern="/login.htm*" security="none"/>
+
+    <http auto-config="true">
+        <form-login login-page="/WEB-INF/pages/login.html"
+                    default-target-url="/index"
+                    login-processing-url="/index"/>
+        <headers><frame-options policy="SAMEORIGIN"/> </headers>
+        <session-management session-fixation-protection="migrateSession">
+            <concurrency-control max-sessions="1"
+                                 error-if-maximum-exceeded="false" expired-url="/index"/>
+        </session-management>
+
+        <!--<logout invalidate-session="true" logout-url="/logout"/>-->
+
+        <csrf disabled="true"/>
+        <!--<remember-me user-service-ref="myUserDetailService"/>-->
+    </http>
+
+    <authentication-manager>
+        <authentication-provider>
+            <user-service>
+                <user name="fabrice" password="fab123" authorities="ROLE_USER"/>
+                <user name="paulson" password="bond" authorities="ROLE_USER, ROLE_ADMIN"/>
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
+
+</b:beans>
