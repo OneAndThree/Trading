@@ -110,6 +110,16 @@
             <artifactId>spring-security-config</artifactId>
             <version>${org.springframework.security-version}</version>
         </dependency>
+         <dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-jdbc</artifactId>
+	        <version>4.3.9.RELEASE</version>
+	    </dependency>
+	    <dependency>  
+		    <groupId>org.springframework</groupId>  
+		    <artifactId>spring-core</artifactId>  
+		    <version>4.3.9.RELEASE</version>  
+		</dependency> 
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
@@ -213,7 +223,7 @@
         <dependency>  
             <groupId>org.mybatis</groupId>  
             <artifactId>mybatis</artifactId>  
-            <version>${mybatis.version}</version>  
+            <version>3.3.0</version>  
         </dependency>  
         <!-- mybatis/spring包 -->  
         <dependency>  
