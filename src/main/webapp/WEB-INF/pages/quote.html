@@ -3,29 +3,62 @@
 <head>
     <meta charset="utf-8">
     <title>Trading Platform</title>
-    <link href="../lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../../lib/bootstrap/css/bootstrap.css" rel="stylesheet">
 </head>
 <body>
-
+<header class="page-header">
+    <h1 class="text-center" data-bind="">Stock</h1>
+</header>
 <article id="main" class="container">
     <div class="row">
         <section class="col-md-8" id="k-line" style="height: 500px;"></section>
+        <section class="col-md-4" id="order-book">
+            <table class="table table-striped">
+                <caption class="text-center h4">Order Book</caption>
+                <thead>
+                    <th>Qty</th>
+                    <th>Bid</th>
+                    <th>Ask</th>
+                    <th>Qty</th>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>17</td>
+                    <td>53.55</td>
+                    <td>54.53</td>
+                    <td>13</td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td>55.16</td>
+                    <td>52.94</td>
+                    <td>21</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>56.81</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
     </div>
 </article>
 
 
 <!-- 3rd party -->
-<script src="../lib/jquery/jquery.js"></script>
-<script src="../lib/bootstrap/js/bootstrap.js"></script>
-<script src="../lib/echarts/echarts.js"></script>
-<script src="../lib/sockjs/sockjs.js"></script>
-<script src="../lib/stomp/lib/stomp.min.js"></script>
+<script src="../../lib/jquery/jquery.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.js"></script>
+<script src="../../lib/echarts/echarts.js"></script>
+<script src="../../lib/sockjs/sockjs.js"></script>
+<script src="../../lib/stomp/lib/stomp.min.js"></script>
 
-<script src="../js/k-line.js"></script>
+<script src="../../js/quote.js"></script>
 <script type="text/javascript">
-    (function() {
-        var socket = new SockJS('/trade');
-        var stompClient = Stomp.over(socket);
+    (function () {
+        /*var socket = new SockJS('/portfolio');
+        var stompClient = Stomp.over(socket);*/
 
         var option = {
             title: {
@@ -39,7 +72,7 @@
                 }
             },
             legend: {
-                data: ['daily-K', 'MA5', 'MA10', 'MA20', 'MA30']
+                data: ['Real Time', "1D", "5D", "1W", "1M"]
             },
             grid: {
                 left: '10%',
@@ -48,7 +81,7 @@
             },
             xAxis: {
                 type: 'category',
-                data: getData().categoryData,
+                data: getHistoricalData().categoryData,
                 scale: true,
                 boundaryGap: false,
                 axisLine: {onZero: false},
@@ -79,9 +112,18 @@
             ],
             series: [
                 {
-                    name: 'daily-K',
+                    name: 'Real Time',
+                    type: 'line',
+                    data: calculateMA(1),
+                    smooth: true,
+                    lineStyle: {
+                        normal: {opacity: 0.5}
+                    }
+                },
+                {
+                    name: '1D',
                     type: 'candlestick',
-                    data: getData().values,
+                    data: getHistoricalData().values,
                     markPoint: {
                         label: {
                             normal: {
@@ -91,14 +133,6 @@
                             }
                         },
                         data: [
-                            {
-                                name: 'XX标点',
-                                coord: ['2013/5/31', 2300],
-                                value: 2300,
-                                itemStyle: {
-                                    normal: {color: 'rgb(41,60,85)'}
-                                }
-                            },
                             {
                                 name: 'highest value',
                                 type: 'max',
@@ -161,7 +195,7 @@
                     }
                 },
                 {
-                    name: 'MA5',
+                    name: '5D',
                     type: 'line',
                     data: calculateMA(5),
                     smooth: true,
@@ -170,25 +204,16 @@
                     }
                 },
                 {
-                    name: 'MA10',
+                    name: '1W',
                     type: 'line',
-                    data: calculateMA(10),
+                    data: calculateMA(7),
                     smooth: true,
                     lineStyle: {
                         normal: {opacity: 0.5}
                     }
                 },
                 {
-                    name: 'MA20',
-                    type: 'line',
-                    data: calculateMA(20),
-                    smooth: true,
-                    lineStyle: {
-                        normal: {opacity: 0.5}
-                    }
-                },
-                {
-                    name: 'MA30',
+                    name: '1M',
                     type: 'line',
                     data: calculateMA(30),
                     smooth: true,

@@ -7,13 +7,21 @@ KLineChart.prototype.init = function() {
     var kLineChart = echarts.init(kLineDom);
     kLineChart.setOption(this.option);
 }
-
 KLineChart.prototype.updateRealTimeData = function(data){
     //TODO? need to update this.option
 
+    var data0 = option.data;
+    var axisData = 0;
+
+    data0.shift();
+    data0.push(Math.round(Math.random() * 1000));
+    option.xAxis[0].data.shift();
+    option.xAxis[0].data.push(axisData);
+
+    this.setOption(option);
 }
 
-function getData() {
+function getHistoricalData(symbol, time) {
     // 数据意义：开盘(open)，收盘(close)，最低(lowest)，最高(highest)
     var data0 = splitData([
         ['2013/1/24', 2320.26, 2320.26, 2287.3, 2362.94],
@@ -105,6 +113,22 @@ function getData() {
         ['2013/6/7', 2242.26, 2210.9, 2205.07, 2250.63],
         ['2013/6/13', 2190.1, 2148.35, 2126.22, 2190.1]
     ]);
+
+    /*$.ajax({
+        type: 'post',
+        url: '/getHistoricalDataBySymbol',
+        data:{
+            symbol: symbol,
+            time: time
+        },
+        success: function (data){
+            return data;
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });*/
+
     return data0;
 }
 
@@ -123,7 +147,7 @@ function splitData(rawData) {
 
 function calculateMA(dayCount) {
     var result = [];
-    var data0 = getData();
+    var data0 = getHistoricalData();
     for (var i = 0, len = data0.values.length; i < len; i++) {
         if (i < dayCount) {
             result.push('-');

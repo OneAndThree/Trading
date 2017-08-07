@@ -18,7 +18,7 @@ public class AccountController {
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index() {
-        return "index";
+        return "portfolio";
     }
 
     @RequestMapping(value = "/error", method = RequestMethod.GET)
@@ -30,5 +30,10 @@ public class AccountController {
     @RequestMapping(value = "/portfolio", method = RequestMethod.GET)
     public String portfolio() {
         return "portfolio";
+    }
+
+    @RequestMapping(value = "/quote", method = RequestMethod.GET)
+    public String getKLineByName() {
+        return "quote";
     }
 }
