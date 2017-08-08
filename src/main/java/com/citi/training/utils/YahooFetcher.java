@@ -23,8 +23,8 @@ import java.util.Map.Entry;
 
 public class YahooFetcher {
 
-	private final String baseURL = "http://finance.yahoo.com/d/quotes.csv?s=";
-	//private final String baseURL = "http://download.finance.yahoo.com/d/quotes.csv?s=";
+	//private final String baseURL = "http://finance.yahoo.com/d/quotes.csv?s=";
+	private final String baseURL = "http://download.finance.yahoo.com/d/quotes.csv?s=";
 	private final String tagURL = "&f=";
 	@SuppressWarnings("serial")
 	private final Map<String, String> tags = new HashMap<String, String>() { {

@@ -29,5 +29,9 @@ public class HistoryEquityDataServiceImpl implements IHistoryEquityDataService{
 		    //return historyEquityDataMapper.insert(record);
 		}
 	}
+	@Override
+	public HistoryEquityData getEquityData(String symble, String period) {		
+		return historyEquityDataMapper.selectByPrimaryKey(symble+"-"+period);
+	}
 
 }
