@@ -6,10 +6,11 @@
     <link href="../../lib/bootstrap/css/bootstrap.css" rel="stylesheet">
 </head>
 <body>
-<header class="page-header">
-    <h1 class="text-center" data-bind="">Stock</h1>
-</header>
+<header id="nav"></header>
 <article id="main" class="container">
+    <div class="row">
+        <h4 class="col-md-3" data-bind="text: company">Stock Name</h4>
+    </div>
     <div class="row">
         <section class="col-md-8" id="k-line" style="height: 500px;"></section>
         <section class="col-md-4" id="order-book">
@@ -54,12 +55,10 @@
 <script src="../../lib/sockjs/sockjs.js"></script>
 <script src="../../lib/stomp/lib/stomp.min.js"></script>
 
-<script src="../../js/quote.js"></script>
+<script src="../../js/kline.js"></script>
 <script type="text/javascript">
     (function () {
-        /*var socket = new SockJS('/portfolio');
-        var stompClient = Stomp.over(socket);*/
-
+        $("#nav").load("/nav");
         var option = {
             title: {
                 text: 'Live Market',
@@ -225,6 +224,11 @@
         };
         var kLineChart = new KLineChart("k-line", option);
         kLineChart.init();
+
+        var stompClient = getSocketClient('/trade');
+        var appModel = new ApplicationModel(stompClient);
+        ko.applyBindings(appModel);
+        appModel.connect();
     })();
 </script>
 

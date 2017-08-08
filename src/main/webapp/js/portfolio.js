@@ -1,32 +1,30 @@
-function ApplicationModel(stompClient) {
+function ApplicationModel(webSocketClient) {
     var self = this;
 
     self.username = ko.observable();
     self.portfolio = ko.observable(new PortfolioModel());
-    self.trade = ko.observable(new TradeModel(stompClient));
+    self.trade = ko.observable(new TradeModel(webSocketClient.getStompClient()));
     self.notifications = ko.observableArray();
 
     self.connect = function () {
-        stompClient.connect({}, function (frame) {
+        var stompClient = webSocketClient.getStompClient();
+        webSocketClient.connect(self.connectCallback);
+    }
 
-            console.log('Connected ' + frame);
-            self.username(frame.headers['user-name']);
-
-            stompClient.subscribe("/app/positions", function (message) {
-                self.portfolio().loadPositions(JSON.parse(message.body));
-            });
-            stompClient.subscribe("/topic/price.stock.*", function (message) {
-                self.portfolio().processQuote(JSON.parse(message.body));
-            });
-            stompClient.subscribe("/user/queue/position-updates", function (message) {
-                self.pushNotification("Position update " + message.body);
-                self.portfolio().updatePosition(JSON.parse(message.body));
-            });
-            stompClient.subscribe("/user/queue/errors", function (message) {
-                self.pushNotification("Error " + message.body);
-            });
-        }, function (error) {
-            console.log("STOMP protocol error " + error);
+    self.connectCallback = function (frame, stompClient) {
+        self.username(frame.headers['user-name']);
+        stompClient.subscribe("/app/positions", function (message) {
+            self.portfolio().loadPositions(JSON.parse(message.body));
+        });
+        stompClient.subscribe("/topic/price.stock.*", function (message) {
+            self.portfolio().processQuote(JSON.parse(message.body));
+        });
+        stompClient.subscribe("/user/queue/position-updates", function (message) {
+            self.pushNotification("Position update " + message.body);
+            self.portfolio().updatePosition(JSON.parse(message.body));
+        });
+        stompClient.subscribe("/user/queue/errors", function (message) {
+            self.pushNotification("Error " + message.body);
         });
     }
 
@@ -38,8 +36,8 @@ function ApplicationModel(stompClient) {
     }
 
     self.logout = function () {
-        stompClient.disconnect();
-        window.location.href = "../logout.html";
+        webSocketClient.disconnect();
+        window.location.href = "/logout";
     }
 }
 

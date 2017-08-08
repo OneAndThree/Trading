@@ -16,9 +16,14 @@ public class AccountController {
         return "login";
     }
 
+    @RequestMapping(value = "/loginout", method = RequestMethod.GET)
+    public String loginout() {
+        return "login";
+    }
+
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index() {
-        return "portfolio";
+        return "index";
     }
 
     @RequestMapping(value = "/error", method = RequestMethod.GET)
@@ -26,6 +31,10 @@ public class AccountController {
         return "error";
     }
 
+    @RequestMapping(value = "/nav", method = RequestMethod.GET)
+    public String nav() {
+        return "nav";
+    }
 
     @RequestMapping(value = "/portfolio", method = RequestMethod.GET)
     public String portfolio() {

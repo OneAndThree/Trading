@@ -2,36 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Stock Trading Portfolio</title>
-    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
-    <link href="../../assets/lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <title>Market Data</title>
+    <link href="../../lib/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="../../css/common/portfolio.css" rel="stylesheet">
 </head>
 <body>
+<header id="nav"></header>
 
 <div class="container">
-    <div id="heading" class="masthead">
-        <div class="pull-right">
-            <span class="text-info" data-bind="text: username"><em></em></span>&nbsp;
-            <button data-bind="click: logout" class="btn"><i class="icon-off"></i></button>
-        </div>
-        <h3 class="muted">Stock Trading Portfolio</h3>
-    </div>
-    <div id="main-content">
-        <p>There are two flavors of this app available: one built on stomp.js,
-            and the other built with cujoJS</p>
-        <ul>
-            <li>
-                <p>The portfolio</p>
-                <p><a href="/portfolio">Take me to the <strong>portfolio</strong></a></p>
-            </li>
-            <li>
-                <p>The K-line</p>
-                <p><a href="quote.html">Take me to the <strong>K-line</strong></a></p>
-            </li>
-        </ul>
-    </div>
+
 </div>
 
+<script src="../../lib/jquery/jquery.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.js"></script>
+<script src="../../lib/knockout/knockout.js"></script>
+<script src="../../lib/sockjs/sockjs.js"></script>
+<script src="../../lib/stomp/lib/stomp.min.js"></script>
+
+<!-- application -->
+<script src="../../js/websocket.js"></script>
+<script src="../../js/portfolio.js"></script>
+
+<script>
+    (function () {
+        $("#nav").load("/nav");
+    })();
+</script>
 </body>
 </html>
