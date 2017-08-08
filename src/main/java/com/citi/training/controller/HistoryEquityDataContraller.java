@@ -18,8 +18,9 @@ public class HistoryEquityDataContraller {
 	private String period; 
 	private Map<String, Object> Result;
 	@RequestMapping(value = "/historyDate", method = RequestMethod.GET)
-	public void getHistoryData() {
+	public Map<String, Object> getHistoryData() {
 		HistoryEquityData historyEquityData=historyEquityDataService.getEquityData(symble, period);
 		Result.put("result", historyEquityData.getData());
+		return Result;
 	}
 }
