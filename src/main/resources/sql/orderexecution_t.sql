@@ -1,35 +1,35 @@
 /*
-Navicat MySQL Data Transfer
+ Navicat Premium Data Transfer
 
-Source Server         : Training
-Source Server Version : 50519
-Source Host           : localhost:3306
-Source Database       : trading
+ Source Server         : MySQL
+ Source Server Type    : MySQL
+ Source Server Version : 50719
+ Source Host           : localhost:3306
+ Source Schema         : db_trading
 
-Target Server Type    : MYSQL
-Target Server Version : 50519
-File Encoding         : 65001
+ Target Server Type    : MySQL
+ Target Server Version : 50719
+ File Encoding         : 65001
 
-Date: 2017-08-08 10:24:51
+ Date: 08/08/2017 10:46:54
 */
 
-SET FOREIGN_KEY_CHECKS=0;
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for `orderexecution_t`
+-- Table structure for orderexecution_t
 -- ----------------------------
 DROP TABLE IF EXISTS `orderexecution_t`;
 CREATE TABLE `orderexecution_t` (
-  `executions_id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `fills` int(11) DEFAULT NULL,
   `order_id` bigint(20) NOT NULL,
   `rejections` int(11) DEFAULT NULL,
   `actives` int(11) DEFAULT NULL,
-  PRIMARY KEY (`executions_id`),
+  PRIMARY KEY (`id`),
   KEY `order_id` (`order_id`),
-  CONSTRAINT `order_id` FOREIGN KEY (`order_id`) REFERENCES `orderdetail_t` (`order_id`) ON UPDATE CASCADE
+  CONSTRAINT `order_id` FOREIGN KEY (`order_id`) REFERENCES `orderdetail_t` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of orderexecution_t
--- ----------------------------
+SET FOREIGN_KEY_CHECKS = 1;
