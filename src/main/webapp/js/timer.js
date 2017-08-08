@@ -1,12 +1,11 @@
 function startTime() {
     var today = new Date();
     var y = today.getFullYear();
-    var M = checkTime(today.getMonth());
-    var d = checkTime(today.getDay());
+    var M = checkTime(today.getMonth() + 1);
+    var d = checkTime(today.getDate());
     var h = checkTime(today.getHours());
     var m = checkTime(today.getMinutes());
     var s = checkTime(today.getSeconds());
-
 
     $(".time").html(y + "-" + M + "-" + d + " " + h + ":" + m + ":" + s);
 }
@@ -18,5 +17,6 @@ function checkTime(i) {
     }
     return i;
 }
+
 //timer
 setInterval(startTime, 1000);
