@@ -13,33 +13,39 @@
     </div>
     <div class="row">
         <section class="col-md-8" id="k-line" style="height: 500px;"></section>
-        <section class="col-md-4" id="order-book">
-            <table class="table table-striped">
+        <section class="col-md-2" id="order-book">
+            <table class="table">
                 <caption class="text-center h4">Order Book</caption>
-                <thead>
-                    <th>Qty</th>
-                    <th>Bid</th>
-                    <th>Ask</th>
-                    <th>Qty</th>
-                </thead>
                 <tbody>
                 <tr>
-                    <td>17</td>
-                    <td>53.55</td>
-                    <td>54.53</td>
-                    <td>13</td>
+                    <td>Ask</td>
+                    <td>8.89</td>
+                    <td>221</td>
                 </tr>
                 <tr>
-                    <td>13</td>
-                    <td>55.16</td>
-                    <td>52.94</td>
+                    <td>Ask</td>
+                    <td>8.88</td>
+                    <td>421</td>
+                </tr>
+                <tr>
+                    <td>Ask</td>
+                    <td>8.83</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <td>Bid</td>
+                    <td>8.79</td>
+                    <td>431</td>
+                </tr>
+                <tr>
+                    <td>Bid</td>
+                    <td>8.76</td>
                     <td>21</td>
                 </tr>
                 <tr>
-                    <td>11</td>
-                    <td>56.81</td>
-                    <td></td>
-                    <td></td>
+                    <td>Bid</td>
+                    <td>8.74</td>
+                    <td>121</td>
                 </tr>
                 </tbody>
             </table>
@@ -225,10 +231,10 @@
         var kLineChart = new KLineChart("k-line", option);
         kLineChart.init();
 
-        var stompClient = getSocketClient('/trade');
+        /*var stompClient = getSocketClient('/trade');
         var appModel = new ApplicationModel(stompClient);
         ko.applyBindings(appModel);
-        appModel.connect();
+        appModel.connect();*/
     })();
 </script>
 

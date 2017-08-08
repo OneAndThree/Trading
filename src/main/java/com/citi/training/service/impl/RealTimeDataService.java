@@ -57,7 +57,7 @@ public class RealTimeDataService implements ApplicationListener<BrokerAvailabili
 		this.brokerAvailable.set(event.isBrokerAvailable());
 	}
 
-	@Scheduled(fixedDelay=2000)
+	/*@Scheduled(fixedDelay=2000)*/
 	public void sendQuotes() {
 		for (Quote quote : this.quoteGenerator.generateQuotes()) {
 			if (logger.isTraceEnabled()) {

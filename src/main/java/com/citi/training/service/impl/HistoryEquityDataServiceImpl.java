@@ -1,19 +1,18 @@
 package com.citi.training.service.impl;
 
-import javax.annotation.Resource;
-
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Service;
-
 import com.citi.training.dao.HistoryEquityDataMapper;
 import com.citi.training.model.HistoryEquityData;
 import com.citi.training.service.IHistoryEquityDataService;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 
-@Service("historDataService")
+import javax.annotation.Resource;
+
+@Service("historyEquityDataService")
 public class HistoryEquityDataServiceImpl implements IHistoryEquityDataService{
 	private static Logger logger = Logger.getLogger(HistoryEquityDataServiceImpl.class);
-	@Resource  
-    private HistoryEquityDataMapper historyEquityDataMapper;  
+	@Resource
+    private HistoryEquityDataMapper historyEquityDataMapper;
 	@Override
 	public int saveRecord(HistoryEquityData record) {	
 		if(historyEquityDataMapper.selectByPrimaryKey(record.getPrefix())!=null) {

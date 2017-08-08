@@ -3,7 +3,7 @@
 		 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 		 id="WebApp_ID" version="3.1">
 
-<display-name>Spring MVC Application</display-name>
+	<display-name>Spring MVC Application</display-name>
 
 	<!--utf-8-->
 	<filter>
@@ -63,8 +63,8 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/spring.xml
 			/WEB-INF/spring-security.xml
+			classpath:spring-mybatis.xml
 			<!--/WEB-INF/spring-activemq.xml-->
-			<!--classpath:spring-mybatis.xml-->
 		</param-value>
 	</context-param>
 
