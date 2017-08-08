@@ -1,56 +1,53 @@
 package com.citi.training.model;
 
 public class OrderExecution {
-	private Integer executionsId;
-	private Fill fill;
-	private Integer rejection;
-	private Integer active;
-	OrderDetail orderDetail;
+    private Long id;
 
-	public Integer getExecutionsId() {
-		return executionsId;
-	}
+    private Integer fills;
 
-	public void setExecutionsId(Integer executionsId) {
-		this.executionsId = executionsId;
-	}
+    private Long orderId;
 
-	public Fill getFills() {
-		return fill;
-	}
+    private Integer rejections;
 
-	public void setFills(Fill fills) {
-		this.fill = fill;
-	}
+    private Integer actives;
 
-	public Integer getRejection() {
-		return rejection;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setRejections(Integer rejections) {
-		this.rejection = rejection;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public Integer getActive() {
-		return active;
-	}
+    public Integer getFills() {
+        return fills;
+    }
 
-	public void setActives(Integer actives) {
-		this.active = active;
-	}
+    public void setFills(Integer fills) {
+        this.fills = fills;
+    }
 
-	public OrderDetail getOrderDetail() {
-		return orderDetail;
-	}
+    public Long getOrderId() {
+        return orderId;
+    }
 
-	public void setOrderDetails(OrderDetail orderDetails) {
-		this.orderDetail = orderDetail;
-	}
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
 
-	@Override
-	public String toString() {
-		return "OrderExecution [executionsId=" + executionsId + ", fill=" + fill + ", rejection=" + rejection
-				+ ", active=" + active + ", orderDetail=" + orderDetail + "]";
-	}
+    public Integer getRejections() {
+        return rejections;
+    }
 
+    public void setRejections(Integer rejections) {
+        this.rejections = rejections;
+    }
+
+    public Integer getActives() {
+        return actives;
+    }
+
+    public void setActives(Integer actives) {
+        this.actives = actives;
+    }
 }
