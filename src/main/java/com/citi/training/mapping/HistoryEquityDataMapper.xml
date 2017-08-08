@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.citi.training.dao.HistoryEquityDataMapper">
+  <resultMap id="BaseResultMap" type="com.citi.training.model.HistoryEquityData">
+    <id column="prefix" jdbcType="VARCHAR" property="prefix" />
+    <result column="symble" jdbcType="VARCHAR" property="symble" />
+    <result column="period" jdbcType="VARCHAR" property="period" />
+    <result column="data" jdbcType="VARCHAR" property="data" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    prefix, symble, period, data
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from historydata_t
+    where prefix = #{prefix,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from historydata_t
+    where prefix = #{prefix,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.citi.training.model.HistoryEquityData">
+    insert into historydata_t (prefix, symble, period, 
+      data)
+    values (#{prefix,jdbcType=VARCHAR}, #{symble,jdbcType=VARCHAR}, #{period,jdbcType=VARCHAR}, 
+      #{data,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.citi.training.model.HistoryEquityData">
+    insert into historydata_t
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="prefix != null">
+        prefix,
+      </if>
+      <if test="symble != null">
+        symble,
+      </if>
+      <if test="period != null">
+        period,
+      </if>
+      <if test="data != null">
+        data,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="prefix != null">
+        #{prefix,jdbcType=VARCHAR},
+      </if>
+      <if test="symble != null">
+        #{symble,jdbcType=VARCHAR},
+      </if>
+      <if test="period != null">
+        #{period,jdbcType=VARCHAR},
+      </if>
+      <if test="data != null">
+        #{data,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.citi.training.model.HistoryEquityData">
+    update historydata_t
+    <set>
+      <if test="symble != null">
+        symble = #{symble,jdbcType=VARCHAR},
+      </if>
+      <if test="period != null">
+        period = #{period,jdbcType=VARCHAR},
+      </if>
+      <if test="data != null">
+        data = #{data,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where prefix = #{prefix,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.citi.training.model.HistoryEquityData">
+    update historydata_t
+    set symble = #{symble,jdbcType=VARCHAR},
+      period = #{period,jdbcType=VARCHAR},
+      data = #{data,jdbcType=VARCHAR}
+    where prefix = #{prefix,jdbcType=VARCHAR}
+  </update>
+</mapper>
