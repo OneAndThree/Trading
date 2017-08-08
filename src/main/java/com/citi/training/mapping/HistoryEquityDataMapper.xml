@@ -21,8 +21,7 @@
     where prefix = #{prefix,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.citi.training.model.HistoryEquityData">
-    insert into historydata_t (prefix, symble, period, 
-      data)
+    insert into historydata_t (prefix, symble, period, data)
     values (#{prefix,jdbcType=VARCHAR}, #{symble,jdbcType=VARCHAR}, #{period,jdbcType=VARCHAR}, 
       #{data,jdbcType=VARCHAR})
   </insert>

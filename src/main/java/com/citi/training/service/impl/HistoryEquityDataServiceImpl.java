@@ -10,8 +10,8 @@ import com.citi.training.model.HistoryEquityData;
 import com.citi.training.service.IHistoryEquityDataService;
 
 @Service("historDataService")
-public class IHistoryEquityDataServiceImpl implements IHistoryEquityDataService{
-	private static Logger logger = Logger.getLogger(IHistoryEquityDataServiceImpl.class);
+public class HistoryEquityDataServiceImpl implements IHistoryEquityDataService{
+	private static Logger logger = Logger.getLogger(HistoryEquityDataServiceImpl.class);
 	@Resource  
     private HistoryEquityDataMapper historyEquityDataMapper;  
 	@Override
