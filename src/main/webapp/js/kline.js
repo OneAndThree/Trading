@@ -21,7 +21,8 @@ KLineChart.prototype.updateRealTimeData = function(data){
     this.setOption(option);
 }
 
-function getData(symbol, period){
+function getHistoricalData(symbol, period){
+    var result;
     $.ajax({
         type: 'post',
         url: '/historyDate',
@@ -29,16 +30,19 @@ function getData(symbol, period){
             symbol: symbol,
             period: period
         },
+        async: false,
         success: function (data){
-            console.log(data);
+            result = splitHistoricalData(JSON.parse(data.result));
         },
         error: function () {
             console.error("error");
         }
     });
+    return result;
 }
 
-function getHistoricalData() {
+function getData() {
+    //// 数据意义：开盘(open)，收盘(close)，最低(lowest)，最高(highest)
     var data0 = splitData([
         ['2013/1/24', 2320.26,2320.26,2287.3,2362.94],
         ['2013/1/25', 2300,2291.3,2288.26,2308.38],
@@ -132,7 +136,6 @@ function getHistoricalData() {
     return data0;
 }
 
-
 function splitData(rawData) {
     var categoryData = [];
     var values = []
@@ -146,9 +149,33 @@ function splitData(rawData) {
     };
 }
 
+
+function splitHistoricalData(data) {
+    var categoryData = [];
+    var values = [];
+    var timestamp = data[0].timestamp;
+    var open = data[0].indicators.quote[0].open;
+    var close = data[0].indicators.quote[0].close;
+    var lowest = data[0].indicators.quote[0].low;
+    var highest = data[0].indicators.quote[0].high;
+    for (var i = 0; i < timestamp.length; i++){
+        var rowData = [open[i], close[i], lowest[i], highest[i]];
+        values.push(rowData);
+        var date = new Date();
+        date.setTime(timestamp[i]*1000);
+        categoryData.push(date.toLocaleDateString());
+    }
+    console.log(categoryData);
+    console.log(values);
+    return {
+        categoryData: categoryData,
+        values: values
+    };
+}
+
 function calculateMA(dayCount) {
     var result = [];
-    var data0 = getHistoricalData();
+    var data0 = getData();
     for (var i = 0, len = data0.values.length; i < len; i++) {
         if (i < dayCount) {
             result.push('-');

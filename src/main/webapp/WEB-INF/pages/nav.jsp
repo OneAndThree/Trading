@@ -1,7 +1,8 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="nav-header">
-            <a class="navbar-brand" href="#">Trade</a>
+            <a class="navbar-brand" href="/index">Trade</a>
         </div>
 
         <div class="nav-collapse">
