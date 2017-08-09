@@ -31,7 +31,7 @@ public class portfolioUtilTest {
 
         for (String key:portfolioLookup.keySet()) {
             //euityInfo.get("symbol");
-            System.out.println( key);
+            System.out.println(key);
         }
         //System.out.println(orderholds);
         // logger.info("值："+orderholds);

@@ -33,7 +33,7 @@ public class PortfolioUtilsService {
         for (Map<String, String> user : users) {
             System.out.println("--------------------orderhold-----test-------------------------");
             System.out.println(user.get("name"));
-            List<Map<String, Object>> orderholds = equityHoldService.getSharesAllHold(Long.parseLong(user.get("id").toString()));
+            List<Map<String, Object>> orderholds = equityHoldService.getSharesAllHold(Long.parseLong(String.valueOf(user.get("id"))));
 
             YahooFetchRealTimeData yahooFetchRealTimeData = new YahooFetchRealTimeData();
             Map<String, Object> realtimeData = yahooFetchRealTimeData.getRealtimeData();
@@ -44,8 +44,8 @@ public class PortfolioUtilsService {
                 JSONObject portfoDatalioJObj = JSONObject.fromObject(realtimeData.get(orderhold.get("symbol")));
                 //TODO 验证是否为空
                 portfolio.addPosition(new PortfolioPosition(orderhold.get("symbol").toString(), orderhold.get("symbol").toString(),
-                        Double.parseDouble(portfoDatalioJObj.get("l1").toString()),
-                        Integer.parseInt(portfoDatalioJObj.get("shares").toString())));
+                        Double.parseDouble(String.valueOf(portfoDatalioJObj.get("l1"))),
+                        Integer.parseInt(String.valueOf(orderhold.get("shares")))));
             }
 
             portfolioLookup.put(user.get("name"), portfolio);
