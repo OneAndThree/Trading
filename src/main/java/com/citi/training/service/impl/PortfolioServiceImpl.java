@@ -39,33 +39,7 @@ public class PortfolioServiceImpl implements PortfolioService {
 	// user -> Portfolio
 	private final Map<String, Portfolio> portfolioLookup = new HashMap<>();
 
-	@Resource
-	private IEquityInfoService equityService=null;
-
-	@Resource
-	private ITraderService traderService=null;
-
 	public PortfolioServiceImpl() {
-
-		YahooFetchRealTimeData yahooFetchRealTimeData=new YahooFetchRealTimeData();
-		Map<String,Object> realtimeData=yahooFetchRealTimeData.getRealtimeData();
-
-		List<Map<String,String>> euitiesInfo= equityService.getAllEquityInfo();
-		for (Map<String,String> euityInfo:euitiesInfo) {
-			//euityInfo.get("symbol");
-			System.out.println( euityInfo.get("symbol"));
-		}
-		//for (String key  : realtimeData.keySet()) {
-
-		JSONObject portfoDatalioJObj=JSONObject.fromObject(realtimeData.get(""));
-
-
-
-
-		//}
-
-
-
 
 		Portfolio portfolio = new Portfolio();
 		portfolio.addPosition(new PortfolioPosition("Citrix Systems, Inc.", "CTXS", 24.30, 75));
