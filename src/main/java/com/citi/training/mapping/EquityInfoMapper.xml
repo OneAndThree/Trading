@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.citi.training.dao.EquityInfoMapper">
+  <resultMap id="BaseResultMap" type="com.citi.training.model.EquityInfo">
+    <id column="symbol" jdbcType="VARCHAR" property="symbol" />
+  </resultMap>
+  <select id="getAllEquityInfo" resultType="hashmap">
+    select  * from equity_t
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from equity_t
+    where symbol = #{symbol,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.citi.training.model.EquityInfo">
+    insert into equity_t (symbol)
+    values (#{symbol,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.citi.training.model.EquityInfo">
+    insert into equity_t
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="symbol != null">
+        symbol,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="symbol != null">
+        #{symbol,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
