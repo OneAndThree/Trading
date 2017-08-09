@@ -20,6 +20,15 @@
     from orderdetail_t
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+  <select id="getSharesInfo"  resultType="hashmap">
+    select
+    *
+    from orderdetail_t
+    where symbol = #{symbol,jdbcType=VARCHAR}
+    and trader_id= #{traderId,jdbcType=BIGINT}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from orderdetail_t
     where id = #{id,jdbcType=BIGINT}

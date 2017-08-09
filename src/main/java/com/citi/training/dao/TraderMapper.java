@@ -1,6 +1,10 @@
 package com.citi.training.dao;
 
+import com.citi.training.model.EquityHhold;
 import com.citi.training.model.Trader;
+
+import java.util.List;
+import java.util.Map;
 
 public interface TraderMapper {
     int deleteByPrimaryKey(Long id);
@@ -16,4 +20,6 @@ public interface TraderMapper {
     int updateByPrimaryKey(Trader record);
 
     Trader getByName(String name);
+
+    List<Map<String,String>> getAllTrader();
 }

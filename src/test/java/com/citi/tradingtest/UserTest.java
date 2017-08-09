@@ -13,6 +13,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.citi.training.model.User;
 import com.citi.training.service.IUserService;
 
+import java.util.List;
+import java.util.Map;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)     //表示继承了SpringJUnit4ClassRunner类  
 @ContextConfiguration(locations = {"classpath:spring-mybatis.xml"})
@@ -46,6 +49,18 @@ public class UserTest {
         //logger.info(JSON.toJSONString(user));
     }
 
+    @Test
+    public void test2() {
+        List<Map<String, String>> users = traderService.getAllTrader();
+
+        for (Map<String,String> user:users) {
+            //euityInfo.get("symbol");
+            System.out.println( user.get("name"));
+        }
+        System.out.println(users);
+        logger.info("邮箱："+users);
+        //logger.info(JSON.toJSONString(user));
+    }
 
 
 }

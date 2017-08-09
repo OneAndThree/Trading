@@ -26,9 +26,11 @@ import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import com.citi.training.model.Portfolio;
 import com.citi.training.model.PortfolioPosition;
 import com.citi.training.model.TradeOrderDetail.TradeAction;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +49,15 @@ public class TradeServiceImpl implements TradeService {
 	private final List<TradeResult> tradeResults = new CopyOnWriteArrayList<>();
 
 
+	@Resource
+	private PortfolioUtilsService portfolioUtilsService=null;
+
+//	@Autowired
+//	public TradeServiceImpl(SimpMessageSendingOperations messagingTemplate, PortfolioService portfolioService) {
+//		this.messagingTemplate = messagingTemplate;
+//		this.portfolioService = portfolioService;
+//	}
+
 	@Autowired
 	public TradeServiceImpl(SimpMessageSendingOperations messagingTemplate, PortfolioService portfolioService) {
 		this.messagingTemplate = messagingTemplate;
@@ -56,9 +67,28 @@ public class TradeServiceImpl implements TradeService {
 	/**
 	 * In real application a tradeOrderDetail is probably executed in an external system, i.e. asynchronously.
 	 */
+//	public void executeTrade(TradeOrderDetail tradeOrderDetail) {
+//
+//		Portfolio portfolio = this.portfolioService.findPortfolio(tradeOrderDetail.getUsername());
+//		String ticker = tradeOrderDetail.getTicker();
+//		int sharesToTrade = tradeOrderDetail.getShares();
+//
+//		PortfolioPosition newPosition = (tradeOrderDetail.getAction() == TradeAction.Buy) ?
+//				portfolio.buy(ticker, sharesToTrade) : portfolio.sell(ticker, sharesToTrade);
+//
+//		if (newPosition == null) {
+//			String payload = "Rejected tradeOrderDetail " + tradeOrderDetail;
+//			this.messagingTemplate.convertAndSendToUser(tradeOrderDetail.getUsername(), "/queue/errors", payload);
+//			return;
+//		}
+//
+//		this.tradeResults.add(new TradeResult(tradeOrderDetail.getUsername(), newPosition));
+//	}
 	public void executeTrade(TradeOrderDetail tradeOrderDetail) {
 
-		Portfolio portfolio = this.portfolioService.findPortfolio(tradeOrderDetail.getUsername());
+		Map<String, Portfolio> portfolioLookup =portfolioUtilsService.PortfolioUtil();
+
+		Portfolio portfolio = portfolioLookup.get(tradeOrderDetail.getUsername());
 		String ticker = tradeOrderDetail.getTicker();
 		int sharesToTrade = tradeOrderDetail.getShares();
 
@@ -74,7 +104,8 @@ public class TradeServiceImpl implements TradeService {
 		this.tradeResults.add(new TradeResult(tradeOrderDetail.getUsername(), newPosition));
 	}
 
-	//@Scheduled(fixedDelay=1500)
+
+	@Scheduled(fixedDelay=1500)
 	public void sendTradeNotifications() {
 
 		Map<String, Object> map = new HashMap<>();
