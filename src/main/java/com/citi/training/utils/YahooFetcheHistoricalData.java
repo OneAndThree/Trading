@@ -1,6 +1,6 @@
 package com.citi.training.utils;
 
-import com.citi.training.service.YahooFetcheHistoricalDataService;
+import com.citi.training.service.impl.YahooFetcheHistoricalDataService;
 
 public class YahooFetcheHistoricalData {
 	public String[] symbols = { "ABT", "ABBV", "ACN", "ACE", "ADBE", "ADT", "AAP", "AES", "AET", "AFL", "AMG", "A",

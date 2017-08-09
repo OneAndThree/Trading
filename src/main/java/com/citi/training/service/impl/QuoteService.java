@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.citi.training.service;
+package com.citi.training.service.impl;
 
 import java.math.BigDecimal;
 import java.math.MathContext;

@@ -13,9 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.citi.training.service;
+package com.citi.training.service.impl;
 
 import com.citi.training.model.TradeOrderDetail;
+import com.citi.training.service.PortfolioService;
+import com.citi.training.service.TradeService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
