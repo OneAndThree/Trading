@@ -95,6 +95,7 @@
 <script src="../../lib/stomp/lib/stomp.min.js"></script>
 
 <script src="../../js/kline.js"></script>
+<script src="../../js/portfolio.js"></script>
 <script type="text/javascript">
     (function () {
         var daily_data = getHistoricalData('${symbol}', '1d');

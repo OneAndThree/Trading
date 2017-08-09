@@ -39,7 +39,7 @@
             </thead>
             <tbody data-bind="foreach: portfolio().rows">
             <tr>
-                <td><a href="#" data-bind="text: company, click: $root.tradeOrderDetail().showDetails"></a></td>
+                <td><a href="#" data-bind="text: company, click: $root.trade().showDetails"></a></td>
                 <td data-bind="text: ticker"></td>
                 <td data-bind="text: formattedPrice" class="number"></td>
                 <td data-bind="text: change, style: {color: change() < 0 ? 'red' : 'green'}" class="number"></td>
@@ -47,8 +47,8 @@
                 <td data-bind="text: shares" class="number"></td>
                 <td data-bind="text: formattedValue" class="number"></td>
                 <td class="tradeOrderDetail-buttons">
-                    <button class="btn btn-primary" data-bind="click: $root.tradeOrderDetail().showBuy">Buy</button>
-                    <button class="btn btn-primary" data-bind="click: $root.tradeOrderDetail().showSell">Sell</button>
+                    <button class="btn btn-primary" data-bind="click: $root.trade().showBuy">Buy</button>
+                    <button class="btn btn-primary" data-bind="click: $root.trade().showSell">Sell</button>
                 </td>
             </tr>
             </tbody>
