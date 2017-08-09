@@ -18,6 +18,8 @@ package com.citi.training.service.impl;
 
 import com.citi.training.model.Portfolio;
 import com.citi.training.model.PortfolioPosition;
+import com.citi.training.model.Trader;
+import com.citi.training.service.IEquityHoldService;
 import com.citi.training.service.IEquityInfoService;
 import com.citi.training.service.ITraderService;
 import com.citi.training.service.PortfolioService;
@@ -36,33 +38,65 @@ import java.util.Map;
 @Service
 public class PortfolioServiceImpl implements PortfolioService {
 
-	// user -> Portfolio
-	private final Map<String, Portfolio> portfolioLookup = new HashMap<>();
+    // user -> Portfolio
+    private final Map<String, Portfolio> portfolioLookup = new HashMap<>();
 
-	public PortfolioServiceImpl() {
+    @Resource
+    private IEquityInfoService equityService = null;
 
-		Portfolio portfolio = new Portfolio();
-		portfolio.addPosition(new PortfolioPosition("Citrix Systems, Inc.", "CTXS", 24.30, 75));
-		portfolio.addPosition(new PortfolioPosition("Dell Inc.", "DELL", 13.44, 50));
-		portfolio.addPosition(new PortfolioPosition("Microsoft", "MSFT", 34.15, 33));
-		portfolio.addPosition(new PortfolioPosition("Oracle", "ORCL", 31.22, 45));
-		this.portfolioLookup.put("fabrice", portfolio);
+    @Resource
+    private ITraderService traderService = null;
 
-		portfolio = new Portfolio();
-		portfolio.addPosition(new PortfolioPosition("EMC Corporation", "EMC", 24.30, 75));
-		portfolio.addPosition(new PortfolioPosition("Google Inc", "GOOG", 905.09, 5));
-		portfolio.addPosition(new PortfolioPosition("VMware, Inc.", "VMW", 65.58, 23));
-		portfolio.addPosition(new PortfolioPosition("Red Hat", "RHT", 48.30, 15));
-		this.portfolioLookup.put("paulson", portfolio);
-	}
+    @Resource
+    private IEquityHoldService equityHoldService = null;
 
+    public PortfolioServiceImpl() {
+        Portfolio portfolio = new Portfolio();
+        portfolio.addPosition(new PortfolioPosition("Citrix Systems, Inc.", "CTXS", 24.30, 75));
+        portfolio.addPosition(new PortfolioPosition("Dell Inc.", "DELL", 13.44, 50));
+        portfolio.addPosition(new PortfolioPosition("Microsoft", "MSFT", 34.15, 33));
+        portfolio.addPosition(new PortfolioPosition("Oracle", "ORCL", 31.22, 45));
+        this.portfolioLookup.put("fabrice", portfolio);
 
-	public Portfolio findPortfolio(String username) {
-		Portfolio portfolio = this.portfolioLookup.get(username);
-		if (portfolio == null) {
-			throw new IllegalArgumentException(username);
-		}
-		return portfolio;
-	}
+        portfolio = new Portfolio();
+        portfolio.addPosition(new PortfolioPosition("EMC Corporation", "EMC", 24.30, 75));
+        portfolio.addPosition(new PortfolioPosition("Google Inc", "GOOG", 905.09, 5));
+        portfolio.addPosition(new PortfolioPosition("VMware, Inc.", "VMW", 65.58, 23));
+        portfolio.addPosition(new PortfolioPosition("Red Hat", "RHT", 48.30, 15));
+        this.portfolioLookup.put("paulson", portfolio);
+    }
+
+//    public PortfolioServiceImpl() {
+//        List<Map<String, String>> users = traderService.getAllTrader();
+//        for (Map<String, String> user : users) {
+//            System.out.println("--------------------orderhold-----test-------------------------");
+//            System.out.println(user.get("name"));
+//            List<Map<String, String>> orderholds = equityHoldService.getSharesAllHold(Long.parseLong(user.get("id")));
+//
+//            YahooFetchRealTimeData yahooFetchRealTimeData = new YahooFetchRealTimeData();
+//            Map<String, Object> realtimeData = yahooFetchRealTimeData.getRealtimeData();
+//
+//            Portfolio portfolio = new Portfolio();
+//
+//            for (Map<String, String> orderhold : orderholds) {
+//                JSONObject portfoDatalioJObj = JSONObject.fromObject(realtimeData.get(orderhold.get("symbol")));
+//                //TODO 验证是否为空
+//                portfolio.addPosition(new PortfolioPosition(orderhold.get("symbol"), orderhold.get("symbol"),
+//                        Double.parseDouble(portfoDatalioJObj.get("l1").toString()),
+//                        Integer.parseInt(portfoDatalioJObj.get("shares").toString())));
+//            }
+//
+//            this.portfolioLookup.put(user.get("name"), portfolio);
+//
+//        }
+//    }
+
+    public Portfolio findPortfolio(String username) {
+        Portfolio portfolio = this.portfolioLookup.get(username);
+        if (portfolio == null) {
+            throw new IllegalArgumentException(username);
+        }
+        return portfolio;
+    }
 
 }
