@@ -13,7 +13,7 @@
     <div data-bind="visible: showErrorMessage" class="alert alert-error">
       Invalid username/password.
     </div>
-    <form class="form-signin" method="post" action="/index">
+    <form class="form-signin" method="post" action="/checkLogin">
       <h3 class="text-muted form-signin-heading">Please Sign In</h3>
       <input type="text" class="form-control" placeholder="User name" name="username">
       <input type="password" class="form-control" placeholder="Password" name="password">
