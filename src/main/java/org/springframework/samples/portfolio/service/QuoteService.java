@@ -56,14 +56,14 @@ public class QuoteService implements ApplicationListener<BrokerAvailabilityEvent
 		this.brokerAvailable.set(event.isBrokerAvailable());
 	}
 
-	@Scheduled(fixedDelay=2000)
+	//@Scheduled(fixedDelay=2000)
 	public void sendQuotes() {
 		for (Quote quote : this.quoteGenerator.generateQuotes()) {
 			if (logger.isTraceEnabled()) {
 				logger.trace("Sending quote " + quote);
 			}
 			if (this.brokerAvailable.get()) {
-				this.messagingTemplate.convertAndSend("/topic/price.stock." + quote.getTicker(), quote);
+				//this.messagingTemplate.convertAndSend("/topic/price.stock." + quote.getTicker(), quote);
 			}
 		}
 	}
