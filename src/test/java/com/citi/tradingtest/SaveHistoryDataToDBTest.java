@@ -47,6 +47,20 @@ public class SaveHistoryDataToDBTest {
 	}
 
 	@Test
+	public void test1() {
+		for (int i = 0; i < symbols.length; i++) {
+			System.out.print(i + 1);
+			String data = fecthData.get1DayDataFromAPI(symbols[i]);
+			HistoryEquityData historyEquityData = new HistoryEquityData();
+			historyEquityData.setPrefix(symbols[i] + flag + "1d");
+			historyEquityData.setSymble(symbols[i]);
+			historyEquityData.setPeriod("1d");
+			historyEquityData.setData(data);
+			historyEquityDataService.saveRecord(historyEquityData);
+
+		}
+	}
+	@Test
 	public void test2() {
 		for (int i = 0; i < symbols.length; i++) {
 			String data = fecthData.get1moDataFromAPI(symbols[i]);

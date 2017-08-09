@@ -19,6 +19,7 @@ public class YahooFetcheHistoricalDataService {
 	private final static String postfix = "&includePrePost=false&interval=30m&corsDomain=finance.yahoo.com&.tsrc=finance";
 	@SuppressWarnings("serial")
 	private final Map<String, String>  period= new HashMap<String, String>() {{
+		put("1d", "1d");
 		put("5d", "5d");
 		put("1mo", "1mo");
 		put("3mo", "3mo");
@@ -31,6 +32,17 @@ public class YahooFetcheHistoricalDataService {
 		put("max", "max");
 		
 	}};
+
+	public String get1DayDataFromAPI(String symbol) {
+		URL url = null;
+
+		try {
+			url = new URL(baseURL + symbol+ middle + period.get("1d") + postfix);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		return processURL(url);
+	}
     
 	public String get5DayDataFromAPI(String symbol) {
 		URL url = null;
