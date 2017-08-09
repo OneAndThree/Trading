@@ -110,6 +110,20 @@ function PortfolioRow(data) {
     };
 };
 
+function MarketDataRow(data) {
+    var self = this;
+//{"r2":"N/A","t8":"62.63","l1":"65.40","l2":"N/A","j1":"N/A","j3":"N/A","b2":"N/A","b3":"N/A","a":"N/A","b":"N/A","m2":"N/A","k1":"N/A","k2":"N/A","k3":"64839805","l":"4:02pm - <b>65.40</b>","i5":"N/A","m":"65.35 - 66.88","o":"66.82","p":"66.89","a2":"7346880","q":"6/8/2017","r":"N/A","s":"RAI","v":"159452032","w":"43.38 - 67.81","y":"0.00","r1":"7/3/2017"}
+
+    self.symbol = data.s;
+
+    self.price = ko.observable(data.l1);
+    self.formattedPrice = ko.computed(function () {
+        return "$" + self.price().toFixed(2);
+    });
+    self.change = ko.observable(data.k2);
+
+}
+
 function TradeModel(stompClient) {
     var self = this;
 
@@ -117,7 +131,6 @@ function TradeModel(stompClient) {
     self.sharesToTrade = ko.observable(0);
     self.currentRow = ko.observable({});
     self.error = ko.observable('');
-    self.suppressValidation = ko.observable(false);
 
     self.showDetails = function (row) {
         console.info(row);
@@ -136,7 +149,6 @@ function TradeModel(stompClient) {
         self.sharesToTrade(0);
         self.currentRow(row);
         self.error('');
-        self.suppressValidation(false);
         $('#trade-dialog').modal();
     }
 
@@ -159,7 +171,7 @@ function TradeModel(stompClient) {
     }
 
     self.executeTrade = function () {
-        if (!self.suppressValidation() && !validateShares()) {
+        if (!validateShares()) {
             return;
         }
         var trade = {
@@ -167,7 +179,7 @@ function TradeModel(stompClient) {
             "ticker": self.currentRow().ticker,
             "shares": self.sharesToTrade()
         };
-        /*console.log(trade);*/
+
         stompClient.send("/app/trade", {}, JSON.stringify(trade));
         $('#trade-dialog').modal('hide');
     }

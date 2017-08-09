@@ -22,7 +22,7 @@
                 <span class="text-info" data-bind="text: username"><em></em></span>&nbsp;
                 <button data-bind="click: logout" class="btn"><i class="glyphicon glyphicon-off"></i></button>
             </div>
-            <h3 class="text-muted">Stock Trading Portfolio</h3>
+            <h3 class="text-muted">My Portfolio</h3>
         </div>
         <table class="table table-striped">
             <thead>

@@ -7,7 +7,7 @@ function startTime() {
     var m = checkTime(today.getMinutes());
     var s = checkTime(today.getSeconds());
 
-    $(".time").html(y + "-" + M + "-" + d + " " + h + ":" + m + ":" + s);
+    document.querySelector(".time").innerHTML = y + "-" + M + "-" + d + " " + h + ":" + m + ":" + s;
 }
 
 // add a zero in front of numbers<10
