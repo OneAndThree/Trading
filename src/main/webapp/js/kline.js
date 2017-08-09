@@ -2,14 +2,14 @@ function getHistoricalData(symbol, period) {
     var result;
     $.ajax({
         type: 'post',
-        url: '/historyDate',
+        url: '/historyData',
         data: {
             symbol: symbol,
             period: period
         },
         async: false,
         success: function (data) {
-            result = splitHistoricalData(JSON.parse(data.result));
+            result = splitHistoricalData(data);
         },
         error: function () {
             console.error("error");
@@ -26,12 +26,11 @@ function getCloseData(value) {
 }
 
 function splitHistoricalData(data) {
+    var data = JSON.parse(data.result);
     var categoryData = [];
     var values = [];
-    console.log(data[0]);
     if(data !== null){
         var timestamp = data[0].timestamp;
-
         var open = data[0].indicators.quote[0].open;
         var close = data[0].indicators.quote[0].close;
         var lowest = data[0].indicators.quote[0].low;
