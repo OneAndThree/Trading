@@ -170,7 +170,7 @@ function TradeModel(stompClient) {
 
         // console.log(trade);
 
-        // stompClient.send("/app/trade", {}, JSON.stringify(trade));
+        stompClient.send("/app/tradeOrderDetail", {}, JSON.stringify(trade));
         $('#trade-dialog').modal('hide');
     }
 }
