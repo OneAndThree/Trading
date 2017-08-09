@@ -20,5 +20,5 @@ public interface EquityHholdMapper {
 
     List<Map<String,String>>  getSharesHold(EquityHhold record);
 
-    List<Map<String,String>>  getSharesAllHold(EquityHhold record);
+    List<Map<String,Object>>  getSharesAllHold(EquityHhold record);
 }

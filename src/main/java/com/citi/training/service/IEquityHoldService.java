@@ -21,5 +21,5 @@ public interface IEquityHoldService {
 
     public List<Map<String,String>>  getSharesHold(Long traderid,String symbol);
 
-    public List<Map<String,String>>  getSharesAllHold(Long traderid);
+    public List<Map<String,Object>>  getSharesAllHold(Long traderid);
 }

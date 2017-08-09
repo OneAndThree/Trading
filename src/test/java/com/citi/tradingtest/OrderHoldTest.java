@@ -40,8 +40,9 @@ public class OrderHoldTest {
     @Test
     public void test2() {
 
-        List<Map<String,String>> orderholds= equityHoldService.getSharesAllHold(1L);
-        for (Map<String,String> orderhold:orderholds) {
+
+        List<Map<String,Object>> orderholds= equityHoldService.getSharesAllHold(Long.parseLong(("1").toString()));
+        for (Map<String,Object> orderhold:orderholds) {
             //euityInfo.get("symbol");
             System.out.println( orderhold.get("symbol"));
         }

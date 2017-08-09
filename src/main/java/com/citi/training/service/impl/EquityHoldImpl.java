@@ -57,7 +57,7 @@ public class EquityHoldImpl implements IEquityHoldService {
     }
 
     @Override
-    public List<Map<String, String>> getSharesAllHold(Long traderid) {
+    public List<Map<String, Object>> getSharesAllHold(Long traderid) {
         EquityHhold record=new EquityHhold();
         record.setTraderId(traderid);
         return equityhold.getSharesAllHold(record);
