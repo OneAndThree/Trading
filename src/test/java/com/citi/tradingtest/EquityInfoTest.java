@@ -24,17 +24,17 @@ public class EquityInfoTest {
 	private static Logger logger = Logger.getLogger(EquityInfoTest.class);
 
     @Resource
-    private IEquityInfoService euiquityService=null;
+    private IEquityInfoService equityService=null;
 
     @Test  
     public void test() {
-        List<Map<String,String>> euitiesInfo= euiquityService.getAllEquityInfo();
+        List<Map<String,String>> euitiesInfo= equityService.getAllEquityInfo();
         for (Map<String,String> euityInfo:euitiesInfo) {
             //euityInfo.get("symbol");
             System.out.println( euityInfo.get("symbol"));
         }
-        System.out.println(euiquityService.getAllEquityInfo());
-        logger.info("值："+euiquityService.getAllEquityInfo());
+        System.out.println(equityService.getAllEquityInfo());
+        logger.info("值："+equityService.getAllEquityInfo());
         //logger.info(JSON.toJSONString(user));  
     }
 }

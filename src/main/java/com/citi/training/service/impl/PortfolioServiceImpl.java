@@ -19,6 +19,7 @@ package com.citi.training.service.impl;
 import com.citi.training.model.Portfolio;
 import com.citi.training.model.PortfolioPosition;
 import com.citi.training.service.IEquityInfoService;
+import com.citi.training.service.ITraderService;
 import com.citi.training.service.PortfolioService;
 import com.citi.training.utils.YahooFetchRealTimeData;
 import net.sf.json.JSONObject;
@@ -39,14 +40,17 @@ public class PortfolioServiceImpl implements PortfolioService {
 	private final Map<String, Portfolio> portfolioLookup = new HashMap<>();
 
 	@Resource
-	private IEquityInfoService euiquityService=null;
+	private IEquityInfoService equityService=null;
+
+	@Resource
+	private ITraderService traderService=null;
 
 	public PortfolioServiceImpl() {
 
 		YahooFetchRealTimeData yahooFetchRealTimeData=new YahooFetchRealTimeData();
 		Map<String,Object> realtimeData=yahooFetchRealTimeData.getRealtimeData();
 
-		List<Map<String,String>> euitiesInfo= euiquityService.getAllEquityInfo();
+		List<Map<String,String>> euitiesInfo= equityService.getAllEquityInfo();
 		for (Map<String,String> euityInfo:euitiesInfo) {
 			//euityInfo.get("symbol");
 			System.out.println( euityInfo.get("symbol"));
