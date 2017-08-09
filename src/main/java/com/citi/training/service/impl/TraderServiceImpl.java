@@ -7,6 +7,9 @@ import com.citi.training.model.Trader;
 import com.citi.training.service.ITraderService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 @Service("traderService")
 public class TraderServiceImpl implements ITraderService{
 
@@ -47,5 +50,11 @@ public class TraderServiceImpl implements ITraderService{
 	public Trader selectByName(String name) {
 		return this.traderDao.getByName(name);
 	}
+
+	@Override
+	public List<Map<String, String>> getAllTrader() {
+		return this.traderDao.getAllTrader();
+	}
+
 
 }

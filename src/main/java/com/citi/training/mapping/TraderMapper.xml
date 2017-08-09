@@ -17,6 +17,13 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
 
+
+  <select id="getAllTrader"  resultType="hashmap">
+    select
+    *
+    from trader_t
+  </select>
+
   <select id="getByName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

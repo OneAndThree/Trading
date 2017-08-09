@@ -3,6 +3,9 @@ package com.citi.training.service;
 
 import com.citi.training.model.Trader;
 
+import java.util.List;
+import java.util.Map;
+
 public interface ITraderService {
 	
 	public Trader getTraderById(Long traderId);
@@ -19,6 +22,6 @@ public interface ITraderService {
 
     public Trader selectByName(String name);
 
-	
+	public List<Map<String,String>> getAllTrader();
 
 }
