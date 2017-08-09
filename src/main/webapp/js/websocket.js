@@ -16,7 +16,7 @@ WebsocketClient.prototype.connect = function (connectCallback) {
     var self = this;
     this.stompClient.connect({},function (frame) {
         connectCallback(frame, self.stompClient);
-    }, function (err) {
+    }, function (error) {
         console.error("STOMP protocol error " + error);
     });
 };

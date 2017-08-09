@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +10,7 @@
 <header id="nav"></header>
 <article id="main" class="container">
     <div class="row">
-        <h4 class="col-md-3" data-bind="text: company">Stock Name</h4>
+        <h4 class="col-md-3" data-bind="text: company">${symbol}</h4>
     </div>
     <div class="row">
         <section class="col-md-8" id="k-line" style="height: 500px;"></section>
@@ -67,7 +68,7 @@
         $("#nav").load("/nav");
         var option = {
             title: {
-                text: 'Live Market',
+                text: '${symbol}',
                 left: 0
             },
             tooltip: {
@@ -77,7 +78,7 @@
                 }
             },
             legend: {
-                data: ['Real Time', "1D", "5D", "1W", "1M"]
+                data: ["1D", "5D", "1M"]
             },
             grid: {
                 left: '10%',
@@ -86,7 +87,7 @@
             },
             xAxis: {
                 type: 'category',
-                data: getHistoricalData().categoryData,
+                data: getHistoricalData("${symbol}","5d").categoryData,
                 scale: true,
                 boundaryGap: false,
                 axisLine: {onZero: false},
@@ -117,18 +118,9 @@
             ],
             series: [
                 {
-                    name: 'Real Time',
-                    type: 'line',
-                    data: calculateMA(1),
-                    smooth: true,
-                    lineStyle: {
-                        normal: {opacity: 0.5}
-                    }
-                },
-                {
                     name: '1D',
                     type: 'candlestick',
-                    data: getHistoricalData().values,
+                    data: getHistoricalData("${symbol}","1d").values,
                     markPoint: {
                         label: {
                             normal: {
@@ -202,16 +194,7 @@
                 {
                     name: '5D',
                     type: 'line',
-                    data: calculateMA(5),
-                    smooth: true,
-                    lineStyle: {
-                        normal: {opacity: 0.5}
-                    }
-                },
-                {
-                    name: '1W',
-                    type: 'line',
-                    data: calculateMA(7),
+                    data: getHistoricalData("${symbol}","5d").values,
                     smooth: true,
                     lineStyle: {
                         normal: {opacity: 0.5}
@@ -220,7 +203,7 @@
                 {
                     name: '1M',
                     type: 'line',
-                    data: calculateMA(30),
+                    data: getHistoricalData("${symbol}","1mo").values,
                     smooth: true,
                     lineStyle: {
                         normal: {opacity: 0.5}
@@ -230,6 +213,8 @@
         };
         var kLineChart = new KLineChart("k-line", option);
         kLineChart.init();
+
+
 
         /*var stompClient = getSocketClient('/trade');
         var appModel = new ApplicationModel(stompClient);

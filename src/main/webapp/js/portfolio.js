@@ -121,8 +121,8 @@ function TradeModel(stompClient) {
 
     self.showDetails = function (row) {
         console.info(row);
-        window.location.href = "/quote";
-        // window.location.href="/quote?symbol="+row.company;
+        // window.location.href = "/quote";
+        window.location.href="/quote?symbol="+row.company;
     }
     self.showBuy = function (row) {
         self.showModal('Buy', row)

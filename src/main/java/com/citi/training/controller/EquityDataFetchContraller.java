@@ -20,6 +20,7 @@ public class EquityDataFetchContraller {
 	@ResponseBody
 	@RequestMapping(value = "/historyData", method = RequestMethod.POST)
 	public Map<String, Object> getHistoryData(String symbol,String period) {
+		//todo ? 判断NULL
 		HistoryEquityData historyEquityData=historyEquityDataService.getEquityData(symbol, period);
 		Map<String, Object> result = new HashMap<>();
 		result.put("result", historyEquityData.getData());

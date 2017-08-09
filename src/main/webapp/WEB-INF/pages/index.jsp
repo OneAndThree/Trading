@@ -1,14 +1,11 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Stock Trading Portfolio</title>
-    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+    <title>Market Data</title>
     <link href="../../lib/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="../../css/common/portfolio.css" rel="stylesheet">
-    <!--[if lt IE 9]>
-    <script src="../../lib/html5shiv/dist/html5shiv.js"></script>
-    <![endif]-->
 </head>
 <body>
 <header id="nav"></header>
@@ -24,13 +21,11 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Company</th>
+                <th>Symbol</th>
                 <th>Ticker</th>
                 <th class="number">Price</th>
                 <th class="number">Change</th>
                 <th>%</th>
-                <th class="number">Shares</th>
-                <th class="number">Value</th>
                 <th></th>
             </tr>
             </thead>
@@ -41,23 +36,25 @@
                 <td data-bind="text: formattedPrice" class="number"></td>
                 <td data-bind="text: change, style: {color: change() < 0 ? 'red' : 'green'}" class="number"></td>
                 <td data-bind="html: arrow" class="icon"></td>
-                <td data-bind="text: shares" class="number"></td>
-                <td data-bind="text: formattedValue" class="number"></td>
                 <td class="trade-buttons">
                     <button class="btn btn-primary" data-bind="click: $root.trade().showBuy">Buy</button>
                     <button class="btn btn-primary" data-bind="click: $root.trade().showSell">Sell</button>
                 </td>
             </tr>
             </tbody>
-            <tfoot>
+            <tbody>
             <tr>
-                <td colspan="5">Total</td>
-                <td data-bind="text: portfolio().totalShares" class="number"></td>
-                <td data-bind="text: portfolio().totalValue" class="number"></td>
-                <td></td>
+                <td><a href="/quote?symbol=APA">APA</a></td>
+                <td>Ticker</td>
+                <td>$45.22</td>
+                <td>0.4</td>
+                <td class="icon"></td>
+                <td class="trade-buttons">
+                    <button class="btn btn-primary" data-bind="click: $root.trade().showBuy">Buy</button>
+                    <button class="btn btn-primary" data-bind="click: $root.trade().showSell">Sell</button>
+                </td>
             </tr>
-            </tfoot>
-            <tbody></tbody>
+            </tbody>
         </table>
         <div class="alert alert-warning">
             <h5>Notifications</h5>
@@ -109,7 +106,6 @@
     </div>
 </div>
 
-<!-- 3rd party -->
 <script src="../../lib/jquery/jquery.js"></script>
 <script src="../../lib/bootstrap/js/bootstrap.js"></script>
 <script src="../../lib/knockout/knockout.js"></script>
@@ -119,7 +115,8 @@
 <!-- application -->
 <script src="../../js/websocket.js"></script>
 <script src="../../js/portfolio.js"></script>
-<script type="text/javascript">
+
+<script>
     (function () {
         $("#nav").load("/nav");
 
@@ -131,6 +128,5 @@
         appModel.pushNotification("Trade results take a 2-3 second simulated delay. Notifications will appear.");
     })();
 </script>
-
 </body>
 </html>

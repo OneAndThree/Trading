@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,9 +15,9 @@
     </div>
     <form class="form-signin" method="post" action="/index">
       <h3 class="text-muted form-signin-heading">Please Sign In</h3>
-      <input type="text" class="input-block-level" placeholder="User name" name="username">
-      <input type="password" class="input-block-level" placeholder="Password" name="password">
-      <button class="btn btn-primary" type="submit">Sign In</button>
+      <input type="text" class="form-control" placeholder="User name" name="username">
+      <input type="password" class="form-control" placeholder="Password" name="password">
+      <button class="btn btn-primary col-md-offset-4" type="submit">Sign In</button>
     </form>
   </div><!-- /container -->
 
