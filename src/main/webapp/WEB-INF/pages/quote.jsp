@@ -215,7 +215,7 @@
         })
 
 
-        /*var stompClient = getSocketClient('/trade');
+        /*var stompClient = getSocketClient('/tradeOrderDetail');
         var appModel = new ApplicationModel(stompClient);
         ko.applyBindings(appModel);
         appModel.connect();*/
