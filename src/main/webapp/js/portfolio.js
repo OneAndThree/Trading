@@ -131,11 +131,11 @@ function TradeModel(stompClient) {
     self.sharesToTrade = ko.observable(0);
     self.currentRow = ko.observable({});
     self.error = ko.observable('');
+    self.tradeType = ko.observableArray(['Mrkt', 'IOC', 'FOK', 'GTC']);
+    self.selectedType = ko.observable();
 
     self.showDetails = function (row) {
-        console.info(row);
-        // window.location.href = "/quote";
-        window.location.href="/quote?symbol="+row.company;
+        window.location.href = "/quote?symbol=" + row.company;
     }
     self.showBuy = function (row) {
         self.showModal('Buy', row)
@@ -177,10 +177,13 @@ function TradeModel(stompClient) {
         var trade = {
             "action": self.action(),
             "ticker": self.currentRow().ticker,
-            "shares": self.sharesToTrade()
+            "shares": self.sharesToTrade(),
+            "type": self.selectedType()
         };
 
-        stompClient.send("/app/trade", {}, JSON.stringify(trade));
+        // console.log(trade);
+
+        // stompClient.send("/app/trade", {}, JSON.stringify(trade));
         $('#trade-dialog').modal('hide');
     }
 }

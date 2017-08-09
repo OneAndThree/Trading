@@ -21,14 +21,10 @@
                     <div class="form-group">
                         <label class="col-md-offset-2 col-md-2 control-label" for="selectType">Type</label>
                         <div class="col-md-7">
-                        <select class="col-md-8 input-sm" id="selectType">
-                            <option><a href="#">Mrkt</a></option>
-                            <option><a href="#">IOC</a></option>
-                            <option><a href="#">FOK</a></option>
-                            <option><a href="#">GTC</a></option>
-                        </select>
+                            <select class="col-md-8 input-sm form-select" id="selectType"
+                                    data-bind="options: trade().tradeType,value: trade().selectedType">
+                            </select>
                         </div>
-
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-4 col-md-8">
