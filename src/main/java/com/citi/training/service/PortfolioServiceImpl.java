@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package org.springframework.samples.portfolio.service;
+package com.citi.training.service;
 
-import org.springframework.samples.portfolio.Portfolio;
-import org.springframework.samples.portfolio.PortfolioPosition;
+import com.citi.training.model.Portfolio;
+import com.citi.training.model.PortfolioPosition;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

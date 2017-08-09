@@ -13,13 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.portfolio.service;
-
-import org.springframework.samples.portfolio.Portfolio;
+package com.citi.training.service;
 
 
-public interface PortfolioService {
+public interface TradeService {
 
-	Portfolio findPortfolio(String username);
+	void executeTrade(Trade trade);
 
 }

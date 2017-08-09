@@ -13,24 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.portfolio.service;
-
-import java.math.BigDecimal;
+package com.citi.training.service;
 
 
-public class Quote {
+public class Trade {
 
 	private String ticker;
 
-	private BigDecimal price;
+	private int shares;
 
-	public Quote(String ticker, BigDecimal price) {
-		this.ticker = ticker;
-		this.price = price;
-	}
+	private TradeAction action;
 
-	private Quote() {
-	}
+	private String username;
+
 
 	public String getTicker() {
 		return this.ticker;
@@ -40,16 +35,39 @@ public class Quote {
 		this.ticker = ticker;
 	}
 
-	public BigDecimal getPrice() {
-		return this.price;
+	public int getShares() {
+		return this.shares;
 	}
 
-	public void setPrice(BigDecimal price) {
-		this.price = price;
+	public void setShares(int shares) {
+		this.shares = shares;
+	}
+
+	public TradeAction getAction() {
+		return this.action;
+	}
+
+	public void setAction(TradeAction action) {
+		this.action = action;
+	}
+
+	public String getUsername() {
+		return this.username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	@Override
 	public String toString() {
-		return "Quote [ticker=" + this.ticker + ", price=" + this.price + "]";
+		return "[ticker=" + this.ticker + ", shares=" + this.shares
+				+ ", action=" + this.action + ", username=" + this.username + "]";
 	}
+
+
+	public enum TradeAction {
+		Buy, Sell;
+	}
+
 }

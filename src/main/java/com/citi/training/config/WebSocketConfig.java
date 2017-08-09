@@ -1,4 +1,4 @@
-package org.springframework.samples.portfolio.config;
+package com.citi.training.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

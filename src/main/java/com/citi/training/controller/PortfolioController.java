@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.portfolio.web;
+package com.citi.training.controller;
 
 import java.security.Principal;
 import java.util.List;
@@ -25,11 +25,11 @@ import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
-import org.springframework.samples.portfolio.Portfolio;
-import org.springframework.samples.portfolio.PortfolioPosition;
-import org.springframework.samples.portfolio.service.PortfolioService;
-import org.springframework.samples.portfolio.service.Trade;
-import org.springframework.samples.portfolio.service.TradeService;
+import com.citi.training.model.Portfolio;
+import com.citi.training.model.PortfolioPosition;
+import com.citi.training.service.PortfolioService;
+import com.citi.training.service.Trade;
+import com.citi.training.service.TradeService;
 import org.springframework.stereotype.Controller;
 
 

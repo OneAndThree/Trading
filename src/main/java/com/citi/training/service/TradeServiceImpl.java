@@ -13,25 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.portfolio.service;
+package com.citi.training.service;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.MessageHeaders;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
-import org.springframework.messaging.support.MessageHeaderAccessor;
-import org.springframework.samples.portfolio.Portfolio;
-import org.springframework.samples.portfolio.PortfolioPosition;
-import org.springframework.samples.portfolio.service.Trade.TradeAction;
-import org.springframework.scheduling.annotation.Scheduled;
+import com.citi.training.model.Portfolio;
+import com.citi.training.model.PortfolioPosition;
+import com.citi.training.service.Trade.TradeAction;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
-import sun.net.www.MessageHeader;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
