@@ -16,6 +16,14 @@
     from trader_t
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+  <select id="getByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from trader_t
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from trader_t
     where id = #{id,jdbcType=BIGINT}

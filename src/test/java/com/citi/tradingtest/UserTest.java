@@ -2,6 +2,8 @@ package com.citi.tradingtest;
 
 import javax.annotation.Resource;
 
+import com.citi.training.model.Trader;
+import com.citi.training.service.ITraderService;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,8 +20,10 @@ public class UserTest {
 
 	private static Logger logger = Logger.getLogger(UserTest.class);  
 //  private ApplicationContext ac = null;  
-    @Resource  
-    private IUserService userService = null;  
+    @Resource
+    private IUserService userService = null;
+    @Resource
+    private ITraderService traderService=null;
   
 //  @Before  
 //  public void before() {  
@@ -33,6 +37,15 @@ public class UserTest {
         System.out.println(user.getUserName());  
         logger.info("值："+user.getUserName());  
         //logger.info(JSON.toJSONString(user));  
-    }  
+    }
+    @Test
+    public void test1() {
+        Trader user = traderService.selectByName("Danol");
+        System.out.println(user.getEmail());
+        logger.info("邮箱："+user.getEmail());
+        //logger.info(JSON.toJSONString(user));
+    }
+
+
 
 }

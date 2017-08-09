@@ -14,4 +14,6 @@ public interface TraderMapper {
     int updateByPrimaryKeySelective(Trader record);
 
     int updateByPrimaryKey(Trader record);
+
+    Trader getByName(String name);
 }

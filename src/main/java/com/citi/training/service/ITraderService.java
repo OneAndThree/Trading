@@ -17,6 +17,8 @@ public interface ITraderService {
 
     public int updateTrader(Trader record);
 
+    public Trader selectByName(String name);
+
 	
 
 }
