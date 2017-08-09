@@ -7,7 +7,10 @@
     <link href="../../lib/bootstrap/css/bootstrap.css" rel="stylesheet">
 </head>
 <body>
-<header id="nav"></header>
+
+<header id="nav">
+    <jsp:include page="/nav" flush="true"/>
+</header>
 <article id="main" class="container">
     <div class="row">
         <h4 class="col-md-3" data-bind="text: company">${symbol}</h4>
@@ -17,36 +20,30 @@
         <section class="col-md-2" id="order-book">
             <table class="table">
                 <caption class="text-center h4">Order Book</caption>
+                <thead>
+                    <th>Qty</th>
+                    <th>Bid</th>
+                    <th>Ask</th>
+                    <th>Qty</th>
+                </thead>
                 <tbody>
                 <tr>
-                    <td>Ask</td>
-                    <td>8.89</td>
-                    <td>221</td>
+                    <td>17</td>
+                    <td>53.55</td>
+                    <td>54.53</td>
+                    <td>13</td>
                 </tr>
                 <tr>
-                    <td>Ask</td>
-                    <td>8.88</td>
-                    <td>421</td>
-                </tr>
-                <tr>
-                    <td>Ask</td>
-                    <td>8.83</td>
-                    <td>121</td>
-                </tr>
-                <tr>
-                    <td>Bid</td>
-                    <td>8.79</td>
-                    <td>431</td>
-                </tr>
-                <tr>
-                    <td>Bid</td>
-                    <td>8.76</td>
+                    <td>13</td>
+                    <td>55.16</td>
+                    <td>52.94</td>
                     <td>21</td>
                 </tr>
                 <tr>
-                    <td>Bid</td>
-                    <td>8.74</td>
-                    <td>121</td>
+                    <td>11</td>
+                    <td>56.81</td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 </tbody>
             </table>
@@ -65,7 +62,6 @@
 <script src="../../js/kline.js"></script>
 <script type="text/javascript">
     (function () {
-        $("#nav").load("/nav");
         var option = {
             title: {
                 text: '${symbol}',
@@ -78,7 +74,7 @@
                 }
             },
             legend: {
-                data: ["1D", "5D", "1M"]
+                data: ["1K", "5D", "1M"]
             },
             grid: {
                 left: '10%',
@@ -87,7 +83,7 @@
             },
             xAxis: {
                 type: 'category',
-                data: getHistoricalData("${symbol}","5d").categoryData,
+                data: getHistoricalData("${symbol}","1mo").categoryData,
                 scale: true,
                 boundaryGap: false,
                 axisLine: {onZero: false},
@@ -118,9 +114,9 @@
             ],
             series: [
                 {
-                    name: '1D',
+                    name: '1K',
                     type: 'candlestick',
-                    data: getHistoricalData("${symbol}","1d").values,
+                    data: getHistoricalData("${symbol}","1mo").values,
                     markPoint: {
                         label: {
                             normal: {
@@ -194,7 +190,7 @@
                 {
                     name: '5D',
                     type: 'line',
-                    data: getHistoricalData("${symbol}","5d").values,
+                    data: getCloseData(getHistoricalData("${symbol}","5d").values),
                     smooth: true,
                     lineStyle: {
                         normal: {opacity: 0.5}
@@ -203,7 +199,7 @@
                 {
                     name: '1M',
                     type: 'line',
-                    data: getHistoricalData("${symbol}","1mo").values,
+                    data: getCloseData(getHistoricalData("${symbol}","1mo").values),
                     smooth: true,
                     lineStyle: {
                         normal: {opacity: 0.5}
@@ -211,15 +207,19 @@
                 },
             ]
         };
-        var kLineChart = new KLineChart("k-line", option);
-        kLineChart.init();
-
+        var kLineDom = document.getElementById("k-line");
+        var kLineChart = echarts.init(kLineDom);
+        kLineChart.setOption(option);
+        kLineChart.on('legendselectchanged', function (params) {
+            console.log(params);
+        })
 
 
         /*var stompClient = getSocketClient('/trade');
         var appModel = new ApplicationModel(stompClient);
         ko.applyBindings(appModel);
         appModel.connect();*/
+//        192.168.43.124
     })();
 </script>
 

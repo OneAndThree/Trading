@@ -8,7 +8,9 @@
     <link href="../../css/common/portfolio.css" rel="stylesheet">
 </head>
 <body>
-<header id="nav"></header>
+<header id="nav">
+    <jsp:include page="/nav" flush="true"/>
+</header>
 <div class="container">
     <div id="main-content">
         <div id="heading" class="masthead">
@@ -46,8 +48,8 @@
             <tr>
                 <td><a href="/quote?symbol=APA">APA</a></td>
                 <td>Ticker</td>
-                <td>$45.22</td>
-                <td>0.4</td>
+                <td class="number">$45.22</td>
+                <td class="number">0.4</td>
                 <td class="icon"></td>
                 <td class="trade-buttons">
                     <button class="btn btn-primary" data-bind="click: $root.trade().showBuy">Buy</button>
