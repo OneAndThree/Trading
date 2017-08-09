@@ -32,6 +32,11 @@ public class AccountController {
         return "error";
     }
 
+    @RequestMapping(value = "/modal", method = RequestMethod.GET)
+    public String modal() {
+        return "modal";
+    }
+
     @RequestMapping(value = "/nav", method = RequestMethod.GET)
     public String nav() {
         return "nav";
