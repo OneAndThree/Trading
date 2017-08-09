@@ -100,38 +100,7 @@
         var daily_data = getHistoricalData('${symbol}', '1d');
         var week_data = getHistoricalData('${symbol}', '5d');
         var month_data = getHistoricalData('${symbol}', '1mo');
-        var QuoteModal = function (data) {
-            var self = this;
-            self.previous_close = ko.observable();
-            self.open = ko.observable();
-            self.close = ko.observable();
-            self.bid = ko.observable();
-            self.ask = ko.observable();
-            self.volume = ko.observable();
-            self.lowest = ko.observable();
-            self.highest = ko.observable();
-            self.scale = ko.observable();
-            self.gmtoffset = ko.observable();
-            self.instrumentType = ko.observable();
-            self.change = ko.observable();
-            self.change_percent = ko.observable();
 
-            self.splitData = function () {
-                var result = JSON.parse(data.result);
-                var quote = result[0];
-                self.previous_close(quote.meta.previousClose);
-                self.gmtoffset(quote.meta.gmtoffset);
-                self.scale(quote.meta.scale);
-                self.instrumentType(quote.meta.instrumentType);
-                self.highest(quote.indicators.quote[0].high.pop());
-                self.lowest(quote.indicators.quote[0].low.pop());
-                self.open(quote.indicators.quote[0].open.pop());
-                self.close(quote.indicators.quote[0].close.pop());
-                self.volume(quote.indicators.quote[0].volume.pop());
-
-                console.log(quote);
-            }
-        };
         var quote = new QuoteModal(week_data);
         ko.applyBindings(quote);
         quote.splitData();

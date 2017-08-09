@@ -111,20 +111,6 @@ function PortfolioRow(data) {
     };
 };
 
-function MarketDataRow(data) {
-    var self = this;
-//{"r2":"N/A","t8":"62.63","l1":"65.40","l2":"N/A","j1":"N/A","j3":"N/A","b2":"N/A","b3":"N/A","a":"N/A","b":"N/A","m2":"N/A","k1":"N/A","k2":"N/A","k3":"64839805","l":"4:02pm - <b>65.40</b>","i5":"N/A","m":"65.35 - 66.88","o":"66.82","p":"66.89","a2":"7346880","q":"6/8/2017","r":"N/A","s":"RAI","v":"159452032","w":"43.38 - 67.81","y":"0.00","r1":"7/3/2017"}
-
-    self.symbol = data.s;
-
-    self.price = ko.observable(data.l1);
-    self.formattedPrice = ko.computed(function () {
-        return "$" + self.price().toFixed(2);
-    });
-    self.change = ko.observable(data.k2);
-
-}
-
 function TradeModel(stompClient) {
     var self = this;
 
@@ -188,3 +174,35 @@ function TradeModel(stompClient) {
         $('#trade-dialog').modal('hide');
     }
 }
+var QuoteModal = function (data) {
+    var self = this;
+    self.previous_close = ko.observable();
+    self.open = ko.observable();
+    self.close = ko.observable();
+    self.bid = ko.observable();
+    self.ask = ko.observable();
+    self.volume = ko.observable();
+    self.lowest = ko.observable();
+    self.highest = ko.observable();
+    self.scale = ko.observable();
+    self.gmtoffset = ko.observable();
+    self.instrumentType = ko.observable();
+    self.change = ko.observable();
+    self.change_percent = ko.observable();
+
+    self.splitData = function () {
+        var result = JSON.parse(data.result);
+        var quote = result[0];
+        self.previous_close(quote.meta.previousClose);
+        self.gmtoffset(quote.meta.gmtoffset);
+        self.scale(quote.meta.scale);
+        self.instrumentType(quote.meta.instrumentType);
+        self.highest(quote.indicators.quote[0].high.pop());
+        self.lowest(quote.indicators.quote[0].low.pop());
+        self.open(quote.indicators.quote[0].open.pop());
+        self.close(quote.indicators.quote[0].close.pop());
+        self.volume(quote.indicators.quote[0].volume.pop());
+
+        console.log(quote);
+    }
+};
