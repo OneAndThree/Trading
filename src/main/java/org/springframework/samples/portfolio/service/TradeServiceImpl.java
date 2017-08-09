@@ -77,7 +77,7 @@ public class TradeServiceImpl implements TradeService {
 		this.tradeResults.add(new TradeResult(trade.getUsername(), newPosition));
 	}
 
-	@Scheduled(fixedDelay=1500)
+	//@Scheduled(fixedDelay=1500)
 	public void sendTradeNotifications() {
 
 		Map<String, Object> map = new HashMap<>();
