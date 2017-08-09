@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>Trading Platform</title>
     <link href="../../lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../../css/common/portfolio.css" rel="stylesheet">
 </head>
 <body>
 
@@ -13,18 +14,51 @@
 </header>
 <article id="main" class="container">
     <div class="row">
-        <h4 class="col-md-3" data-bind="text: company">${symbol}</h4>
+        <div class="col-md-2">
+            <h1 class="text-center">${symbol}</h1>
+        </div>
+        <div class="col-md-2 price_details">
+            <span class="h1" data-bind="text:previous_close"></span>
+            <ul class="list-unstyled visible-lg-inline-block">
+                <li data-bind="text:change">-6.30</li>
+                <li data-bind="text:change_percent">-0.19%</li>
+            </ul>
+        </div>
+        <div class="col-md-8">
+            <table class="table">
+                <tr>
+                    <th>Previous Close</th>
+                    <td data-bind="text:previous_close"></td>
+                    <th>Open</th>
+                    <td data-bind="text:open"></td>
+                    <th>Bid</th>
+                    <td data-bind="text:bid"></td>
+                    <th>Ask</th>
+                    <td data-bind="text:ask"></td>
+                </tr>
+                <tr>
+                    <th>gmtoffset</th>
+                    <td data-bind="text:gmtoffset"></td>
+                    <th>Volume</th>
+                    <td data-bind="text:volume"></td>
+                    <th>scale</th>
+                    <td data-bind="text:scale"></td>
+                    <th>instrumentType</th>
+                    <td data-bind="text:instrumentType"></td>
+                </tr>
+            </table>
+        </div>
     </div>
     <div class="row">
-        <section class="col-md-8" id="k-line" style="height: 500px;"></section>
+        <section class="col-md-10" id="k-line" style="height: 500px;"></section>
         <section class="col-md-2" id="order-book">
             <table class="table">
                 <caption class="text-center h4">Order Book</caption>
                 <thead>
-                    <th>Qty</th>
-                    <th>Bid</th>
-                    <th>Ask</th>
-                    <th>Qty</th>
+                <th>Qty</th>
+                <th>Bid</th>
+                <th>Ask</th>
+                <th>Qty</th>
                 </thead>
                 <tbody>
                 <tr>
@@ -56,17 +90,53 @@
 <script src="../../lib/jquery/jquery.js"></script>
 <script src="../../lib/bootstrap/js/bootstrap.js"></script>
 <script src="../../lib/echarts/echarts.js"></script>
+<script src="../../lib/knockout/knockout.js"></script>
 <script src="../../lib/sockjs/sockjs.js"></script>
 <script src="../../lib/stomp/lib/stomp.min.js"></script>
 
 <script src="../../js/kline.js"></script>
 <script type="text/javascript">
     (function () {
+        var daily_data = getHistoricalData('${symbol}', '1d');
+        var week_data = getHistoricalData('${symbol}', '5d');
+        var month_data = getHistoricalData('${symbol}', '1mo');
+        var QuoteModal = function (data) {
+            var self = this;
+            self.previous_close = ko.observable();
+            self.open = ko.observable();
+            self.close = ko.observable();
+            self.bid = ko.observable();
+            self.ask = ko.observable();
+            self.volume = ko.observable();
+            self.lowest = ko.observable();
+            self.highest = ko.observable();
+            self.scale = ko.observable();
+            self.gmtoffset = ko.observable();
+            self.instrumentType = ko.observable();
+            self.change = ko.observable();
+            self.change_percent = ko.observable();
+
+            self.splitData = function () {
+                var result = JSON.parse(data.result);
+                var quote = result[0];
+                self.previous_close(quote.meta.previousClose);
+                self.gmtoffset(quote.meta.gmtoffset);
+                self.scale(quote.meta.scale);
+                self.instrumentType(quote.meta.instrumentType);
+                self.highest(quote.indicators.quote[0].high.pop());
+                self.lowest(quote.indicators.quote[0].low.pop());
+                self.open(quote.indicators.quote[0].open.pop());
+                self.close(quote.indicators.quote[0].close.pop());
+                self.volume(quote.indicators.quote[0].volume.pop());
+
+                console.log(quote);
+            }
+        };
+        var quote = new QuoteModal(week_data);
+        ko.applyBindings(quote);
+        quote.splitData();
+
         var option = {
-            title: {
-                text: '${symbol}',
-                left: 0
-            },
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
@@ -83,7 +153,7 @@
             },
             xAxis: {
                 type: 'category',
-                data: getHistoricalData("${symbol}","1mo").categoryData,
+                data: getKChartData(month_data).categoryData,
                 scale: true,
                 boundaryGap: false,
                 axisLine: {onZero: false},
@@ -101,14 +171,14 @@
             dataZoom: [
                 {
                     type: 'inside',
-                    start: 50,
+                    start: 0,
                     end: 100
                 },
                 {
                     show: true,
                     type: 'slider',
                     y: '90%',
-                    start: 50,
+                    start: 0,
                     end: 100
                 }
             ],
@@ -116,7 +186,7 @@
                 {
                     name: '1K',
                     type: 'candlestick',
-                    data: getHistoricalData("${symbol}","1mo").values,
+                    data: getKChartData(daily_data).values,
                     markPoint: {
                         label: {
                             normal: {
@@ -190,7 +260,7 @@
                 {
                     name: '5D',
                     type: 'line',
-                    data: getCloseData(getHistoricalData("${symbol}","5d").values),
+                    data: getKLineData(getKChartData(week_data).values),
                     smooth: true,
                     lineStyle: {
                         normal: {opacity: 0.5}
@@ -199,7 +269,7 @@
                 {
                     name: '1M',
                     type: 'line',
-                    data: getCloseData(getHistoricalData("${symbol}","1mo").values),
+                    data: getKLineData(getKChartData(month_data).values),
                     smooth: true,
                     lineStyle: {
                         normal: {opacity: 0.5}
@@ -210,10 +280,6 @@
         var kLineDom = document.getElementById("k-line");
         var kLineChart = echarts.init(kLineDom);
         kLineChart.setOption(option);
-        kLineChart.on('legendselectchanged', function (params) {
-            console.log(params);
-        })
-
 
         /*var stompClient = getSocketClient('/tradeOrderDetail');
         var appModel = new ApplicationModel(stompClient);

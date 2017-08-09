@@ -14,6 +14,7 @@ function ApplicationModel(webSocketClient) {
     self.connectCallback = function (frame, stompClient) {
         self.username(frame.headers['user-name']);
         stompClient.subscribe("/app/positions", function (message) {
+            console.log(message.body);
             self.portfolio().loadPositions(JSON.parse(message.body));
         });
         stompClient.subscribe("/topic/price.stock.*", function (message) {
