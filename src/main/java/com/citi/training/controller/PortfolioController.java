@@ -18,6 +18,7 @@ package com.citi.training.controller;
 import java.security.Principal;
 import java.util.List;
 
+import com.citi.training.model.TradeOrderDetail;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,6 @@ import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import com.citi.training.model.Portfolio;
 import com.citi.training.model.PortfolioPosition;
 import com.citi.training.service.PortfolioService;
-import com.citi.training.service.Trade;
 import com.citi.training.service.TradeService;
 import org.springframework.stereotype.Controller;
 
@@ -56,11 +56,11 @@ public class PortfolioController {
 		return portfolio.getPositions();
 	}
 
-	@MessageMapping("/trade")
-	public void executeTrade(Trade trade, Principal principal) {
-		trade.setUsername(principal.getName());
-		logger.debug("Trade: " + trade);
-		this.tradeService.executeTrade(trade);
+	@MessageMapping("/tradeOrderDetail")
+	public void executeTrade(TradeOrderDetail tradeOrderDetail, Principal principal) {
+		tradeOrderDetail.setUsername(principal.getName());
+		logger.debug("TradeOrderDetail: " + tradeOrderDetail);
+		this.tradeService.executeTrade(tradeOrderDetail);
 	}
 
 	@MessageExceptionHandler

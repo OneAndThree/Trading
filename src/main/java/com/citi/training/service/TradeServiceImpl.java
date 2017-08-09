@@ -15,6 +15,7 @@
  */
 package com.citi.training.service;
 
+import com.citi.training.model.TradeOrderDetail;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import com.citi.training.model.Portfolio;
 import com.citi.training.model.PortfolioPosition;
-import com.citi.training.service.Trade.TradeAction;
+import com.citi.training.model.TradeOrderDetail.TradeAction;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
 
@@ -51,24 +52,24 @@ public class TradeServiceImpl implements TradeService {
 	}
 
 	/**
-	 * In real application a trade is probably executed in an external system, i.e. asynchronously.
+	 * In real application a tradeOrderDetail is probably executed in an external system, i.e. asynchronously.
 	 */
-	public void executeTrade(Trade trade) {
+	public void executeTrade(TradeOrderDetail tradeOrderDetail) {
 
-		Portfolio portfolio = this.portfolioService.findPortfolio(trade.getUsername());
-		String ticker = trade.getTicker();
-		int sharesToTrade = trade.getShares();
+		Portfolio portfolio = this.portfolioService.findPortfolio(tradeOrderDetail.getUsername());
+		String ticker = tradeOrderDetail.getTicker();
+		int sharesToTrade = tradeOrderDetail.getShares();
 
-		PortfolioPosition newPosition = (trade.getAction() == TradeAction.Buy) ?
+		PortfolioPosition newPosition = (tradeOrderDetail.getAction() == TradeAction.Buy) ?
 				portfolio.buy(ticker, sharesToTrade) : portfolio.sell(ticker, sharesToTrade);
 
 		if (newPosition == null) {
-			String payload = "Rejected trade " + trade;
-			this.messagingTemplate.convertAndSendToUser(trade.getUsername(), "/queue/errors", payload);
+			String payload = "Rejected tradeOrderDetail " + tradeOrderDetail;
+			this.messagingTemplate.convertAndSendToUser(tradeOrderDetail.getUsername(), "/queue/errors", payload);
 			return;
 		}
 
-		this.tradeResults.add(new TradeResult(trade.getUsername(), newPosition));
+		this.tradeResults.add(new TradeResult(tradeOrderDetail.getUsername(), newPosition));
 	}
 
 	//@Scheduled(fixedDelay=1500)

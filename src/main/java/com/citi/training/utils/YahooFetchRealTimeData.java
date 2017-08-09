@@ -62,11 +62,11 @@ public class YahooFetchRealTimeData {
             "q", // Ex-Dividend Date
             "t8", // 1 yr Target Price
             "l2",// High Limit l3 Low Limit
-            "k1",//  Last Trade (Real-time) With Time
+            "k1",//  Last TradeOrderDetail (Real-time) With Time
             "k2",//  Change Percent (Real-time)    
-            "k3",//  Last Trade Size
-            "l",//     Last Trade (With Time)
-            "l1",//   Last Trade (Price Only)
+            "k3",//  Last TradeOrderDetail Size
+            "l",//     Last TradeOrderDetail (With Time)
+            "l1",//   Last TradeOrderDetail (Price Only)
             "i5",//  Order Book (Real-time)
     };
 

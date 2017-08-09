@@ -16,8 +16,10 @@
 package com.citi.training.service;
 
 
+import com.citi.training.model.TradeOrderDetail;
+
 public interface TradeService {
 
-	void executeTrade(Trade trade);
+	void executeTrade(TradeOrderDetail tradeOrderDetail);
 
 }
