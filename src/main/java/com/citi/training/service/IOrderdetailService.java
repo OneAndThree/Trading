@@ -20,6 +20,8 @@ public interface IOrderdetailService {
 
     List<Map<String,String>> getTraderBitOrOfferList(Long traderId,String side,String symbol);
 
+    List<Map<String,String>> getTraderBitOrOfferActiveList(Long traderId,String side,String symbol, int active);
+
     List<Map<String,String>> getBitOrOfferList(String side,String symbol);
 
 

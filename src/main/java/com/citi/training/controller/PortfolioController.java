@@ -92,7 +92,7 @@ public class PortfolioController {
 					JSONObject quote=JSONObject.fromObject(quotes.get(0));
 					if(quote!=null){
 						JSONArray prices=JSONArray.fromObject(quote.get("close"));
-						price=Double.valueOf(String.valueOf(prices.get(prices.size())));
+						price=Double.valueOf(String.valueOf(prices.get(prices.size()-1)));
 					}
 				}
 			}
