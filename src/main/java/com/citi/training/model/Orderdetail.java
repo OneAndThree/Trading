@@ -23,6 +23,8 @@ public class Orderdetail {
 
     private Date deadline;
 
+    private Integer submit;
+
     public Long getId() {
         return id;
     }
@@ -101,5 +103,13 @@ public class Orderdetail {
 
     public void setDeadline(Date deadline) {
         this.deadline = deadline;
+    }
+
+    public Integer getSubmit() {
+        return submit;
+    }
+
+    public void setSubmit(Integer submit) {
+        this.submit = submit;
     }
 }
