@@ -1,13 +1,6 @@
-function startTime() {
+function getDate() {
     var today = new Date();
-    var y = today.getFullYear();
-    var M = checkTime(today.getMonth() + 1);
-    var d = checkTime(today.getDate());
-    var h = checkTime(today.getHours());
-    var m = checkTime(today.getMinutes());
-    var s = checkTime(today.getSeconds());
-
-    document.querySelector(".time").innerHTML = y + "-" + M + "-" + d + " " + h + ":" + m + ":" + s;
+    document.querySelector(".date").innerHTML = today.toUTCString().slice(0,-3);
 }
 
 // add a zero in front of numbers<10
@@ -19,4 +12,4 @@ function checkTime(i) {
 }
 
 //timer
-setInterval(startTime, 1000);
+setInterval(getDate, 1000);

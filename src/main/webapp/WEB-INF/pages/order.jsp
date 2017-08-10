@@ -17,15 +17,11 @@
 
 <div class="container">
     <div id="main-content">
-        <div id="heading" class="masthead">
-            <div class="pull-right">
-                <span class="text-info"><em><sec:authorize access="isAuthenticated()"><sec:authentication property='principal.username'/></sec:authorize></em></span>&nbsp;
-                <button class="btn"><i class="glyphicon glyphicon-off"></i></button>
-            </div>
-            <h3 class="text-muted">Order List</h3>
-        </div>
         <table class="table table-striped">
             <thead>
+            <tr>
+                <td colspan="5"><h3 class="text-left">My Order</h3></td>
+            </tr>
             <tr>
                 <th>Symbol</th>
                 <th>Price</th>

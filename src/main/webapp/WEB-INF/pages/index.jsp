@@ -13,42 +13,33 @@
 </header>
 <div class="container">
     <div id="main-content">
-        <div id="heading" class="masthead">
-            <div class="pull-right">
-                <span class="text-info" data-bind="text: username"><em></em></span>&nbsp;
-                <button data-bind="click: logout" class="btn"><i class="glyphicon glyphicon-off"></i></button>
-            </div>
-            <h3 class="text-muted">Stock Trading Portfolio</h3>
-        </div>
-        <table class="table table-striped">
+        <table class="table text-center">
             <thead>
             <tr>
-                <th>Symbol</th>
-                <th class="number">Price</th>
-                <th class="number">Change</th>
-                <th>%</th>
-                <th></th>
+                <td colspan="5"><h3 class="text-left">Stock Monitor</h3></td>
+            </tr>
+            <tr class="table-header">
+                <td>Symbol</td>
+                <td>Price</td>
+                <td>Change%</td>
+                <td></td>
+                <td></td>
             </tr>
             </thead>
             <tbody data-bind="foreach: portfolio().rows">
             <tr>
                 <td><a href="#" data-bind="text: company, click: $root.trade().showDetails"></a></td>
-                <td data-bind="text: formattedPrice" class="number"></td>
-                <td data-bind="text: change, style: {color: change() < 0 ? 'red' : 'green'}" class="number"></td>
+                <td data-bind="text: formattedPrice"></td>
+                <td data-bind="text: change, style: {color: change() < 0 ? 'red' : 'green'}"></td>
                 <td data-bind="html: arrow" class="icon"></td>
                 <td class="trade-buttons">
-                    <button class="btn btn-primary" data-bind="click: $root.trade().showBuy">Buy</button>
-                    <button class="btn btn-primary" data-bind="click: $root.trade().showSell">Sell</button>
+                    <div class="col-md-offset-2 col-md-4"><button class="btn btn-default" data-bind="click: $root.trade().showBuy">Buy</button></div>
+                    <div class="col-md-4"><button class="btn btn-default" data-bind="click: $root.trade().showSell">Sell</button></div>
                 </td>
             </tr>
+
             </tbody>
         </table>
-        <div class="alert alert-warning">
-            <h5>Notifications</h5>
-            <ul data-bind="foreach: notifications">
-                <li data-bind="text: notification"></li>
-            </ul>
-        </div>
     </div>
     <jsp:include page="/modal" flush="true"/>
 </div>

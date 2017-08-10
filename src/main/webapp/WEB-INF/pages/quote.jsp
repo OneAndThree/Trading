@@ -12,23 +12,19 @@
 <header id="nav">
     <jsp:include page="/nav" flush="true"/>
 </header>
-<article id="main" class="container">
-    <div class="row">
+<section class="jumbotron quote-jumbotron">
+    <div class="container">
         <div class="col-md-2">
             <h1 class="text-center">${symbol}</h1>
         </div>
-        <div class="col-md-2 price_details">
-            <h1 class="price_details" data-bind="text:previous_close"></h1>
-            <ul class="list-unstyled visible-lg-inline-block">
-                <li data-bind="text:change"></li>
-                <li data-bind="html:arrow" class="glyphicon"></li>
-            </ul>
+        <div class="col-md-2">
+            <h1 data-bind="text:previous_close"></h1>
         </div>
         <div class="col-md-8">
-            <table class="table">
+            <table class="table quote-table">
                 <tr>
                     <th>Previous Close</th>
-                    <td data-bind="text: previous_close"></td>
+                    <td ></td>
                     <th>Open</th>
                     <td data-bind="text:open"></td>
                     <th>Bid</th>
@@ -49,8 +45,10 @@
             </table>
         </div>
     </div>
+</section>
+<article id="main" class="container quote-board">
     <div class="row">
-        <section class="col-md-9" id="k-line" style="height: 500px;"></section>
+        <section class="col-md-9" id="k-line" style="height: 500px; padding: 20px;"></section>
         <section class="col-md-3" id="order-book">
             <table class="table">
                 <caption class="text-center h4">Order Book</caption>
@@ -66,18 +64,6 @@
                     <td>49.99</td>
                     <td>51.99</td>
                     <td>4225</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
                 </tr>
                 </tbody>
             </table>
@@ -348,9 +334,12 @@
 
         function changeXAxis(legend) {
             switch (legend) {
-                case '1D': return daily_SplitData.categoryData;
-                case '5D': return week_SplitData.categoryData;
-                case '1M': return month_SplitData.categoryData;
+                case '1D':
+                    return daily_SplitData.categoryData;
+                case '5D':
+                    return week_SplitData.categoryData;
+                case '1M':
+                    return month_SplitData.categoryData;
             }
         }
 

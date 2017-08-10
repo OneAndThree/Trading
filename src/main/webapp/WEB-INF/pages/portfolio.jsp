@@ -17,23 +17,19 @@
 </header>
 <div class="container">
     <div id="main-content">
-        <div id="heading" class="masthead">
-            <div class="pull-right">
-                <span class="text-info" data-bind="text: username"><em></em></span>&nbsp;
-                <button data-bind="click: logout" class="btn"><i class="glyphicon glyphicon-off"></i></button>
-            </div>
-            <h3 class="text-muted">My Portfolio</h3>
-        </div>
-        <table class="table table-striped">
+        <table class="table text-center">
             <thead>
             <tr>
-                <th>Symbol</th>
-                <th class="number">Price</th>
-                <th class="number">Change</th>
-                <th>%</th>
-                <th class="number">Shares</th>
-                <th class="number">Value</th>
-                <th></th>
+                <td colspan="7"><h3 class="text-left">My Portfolio</h3></td>
+            </tr>
+            <tr class="table-header">
+                <td>Symbol</td>
+                <td class="number">Price</td>
+                <td class="number">Change%</td>
+                <td></td>
+                <td class="number">Shares</td>
+                <td class="number">Value</td>
+                <td></td>
             </tr>
             </thead>
             <tbody data-bind="foreach: portfolio().rows">
@@ -44,9 +40,9 @@
                 <td data-bind="html: arrow" class="icon"></td>
                 <td data-bind="text: shares" class="number"></td>
                 <td data-bind="text: formattedValue" class="number"></td>
-                <td class="trade-buttons">
-                    <button class="btn btn-primary" data-bind="click: $root.trade().showBuy">Buy</button>
-                    <button class="btn btn-primary" data-bind="click: $root.trade().showSell">Sell</button>
+                <td class="trade-buttons row">
+                    <div class="col-md-offset-2 col-md-4"><button class="btn btn-default" data-bind="click: $root.trade().showBuy">Buy</button></div>
+                    <div class="col-md-4"><button class="btn btn-default" data-bind="click: $root.trade().showSell">Sell</button></div>
                 </td>
             </tr>
             </tbody>

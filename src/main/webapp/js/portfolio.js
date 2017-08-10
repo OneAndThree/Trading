@@ -201,7 +201,7 @@ var QuoteModal = function () {
     self.scale = ko.observable("N/A");
     self.gmtoffset = ko.observable("N/A");
     self.instrumentType = ko.observable();
-    self.change = ko.observable("N/A");
+    self.change = ko.observable();
     self.arrow = ko.observable();
 
     self.splitData = function (data) {
