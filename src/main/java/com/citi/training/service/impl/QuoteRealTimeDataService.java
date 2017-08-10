@@ -22,9 +22,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.messaging.core.MessageSendingOperations;
 import org.springframework.messaging.simp.broker.BrokerAvailabilityEvent;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
@@ -49,7 +50,7 @@ public class QuoteRealTimeDataService implements ApplicationListener<BrokerAvail
 		this.brokerAvailable.set(event.isBrokerAvailable());
 	}
 
-	//@Scheduled(fixedDelay=5000)
+	@Scheduled(fixedDelay=5000)
 	public void sendQuotes() {
 		YahooFetchRealTimeData yahooFetchRealTimeData=new YahooFetchRealTimeData();
 		Map<String,Object> realtimeData=yahooFetchRealTimeData.getRealtimeData();

@@ -33,7 +33,7 @@
             <tbody data-bind="foreach: portfolio().rows">
             <tr>
                 <td><a href="#" data-bind="text: company, click: $root.trade().showDetails"></a></td>
-                <td data-bind="text: formattedPrice" class="number"></td>
+                <td data-bind="text: price" class="number"></td>
                 <td data-bind="text: change, style: {color: change() < 0 ? 'red' : 'green'}" class="number"></td>
                 <td data-bind="html: arrow" class="icon"></td>
                 <td class="trade-buttons">

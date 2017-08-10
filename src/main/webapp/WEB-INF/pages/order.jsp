@@ -55,7 +55,7 @@
     var Order = function () {
         var self = this;
         self.symbol = ko.observable();
-        self.price = ko.observable();
+        self.p = ko.observable();
         self.quantity = ko.observable();
         self.side = ko.observable();
         self.date = ko.observable();

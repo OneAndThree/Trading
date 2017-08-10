@@ -15,15 +15,8 @@
  */
 package com.citi.training.controller;
 
-import java.security.Principal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.citi.training.model.*;
 import com.citi.training.service.*;
-import com.citi.training.service.impl.PortfolioUtilsService;
-import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
@@ -36,6 +29,9 @@ import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.Resource;
+import java.security.Principal;
+import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -92,7 +88,7 @@ public class PortfolioController {
 					JSONObject quote=JSONObject.fromObject(quotes.get(0));
 					if(quote!=null){
 						JSONArray prices=JSONArray.fromObject(quote.get("close"));
-						price=Double.valueOf(String.valueOf(prices.get(prices.size())));
+						price=Double.valueOf(String.valueOf(prices.get(prices.size() - 1)));
 					}
 				}
 			}

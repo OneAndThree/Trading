@@ -22,17 +22,17 @@ public class PortfolioPosition {
 
 	private String ticker;
 
-	private double price;
+	private double p;
 
 	private int shares;
 
 	private long updateTime;
 
 
-	public PortfolioPosition(String company, String ticker, double price, int shares) {
+	public PortfolioPosition(String company, String ticker, double p, int shares) {
 		this.company = company;
 		this.ticker = ticker;
-		this.price = price;
+		this.p = p;
 		this.shares = shares;
 		this.updateTime = System.currentTimeMillis();
 	}
@@ -40,7 +40,7 @@ public class PortfolioPosition {
 	public PortfolioPosition(PortfolioPosition other, int sharesToAddOrSubtract) {
 		this.company = other.company;
 		this.ticker = other.ticker;
-		this.price = other.price;
+		this.p = other.p;
 		this.shares = other.shares + sharesToAddOrSubtract;
 		this.updateTime = System.currentTimeMillis();
 	}
@@ -64,12 +64,12 @@ public class PortfolioPosition {
 		this.ticker = ticker;
 	}
 
-	public double getPrice() {
-		return this.price;
+	public double getP() {
+		return this.p;
 	}
 
-	public void setPrice(double price) {
-		this.price = price;
+	public void setP(double p) {
+		this.p = p;
 	}
 
 	public int getShares() {
@@ -91,7 +91,7 @@ public class PortfolioPosition {
 	@Override
 	public String toString() {
 		return "PortfolioPosition [company=" + this.company + ", ticker=" + this.ticker
-				+ ", price=" + this.price + ", shares=" + this.shares + "]";
+				+ ", p=" + this.p + ", shares=" + this.shares + "]";
 	}
 
 }

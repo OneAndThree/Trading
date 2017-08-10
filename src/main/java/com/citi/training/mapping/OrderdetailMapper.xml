@@ -8,13 +8,13 @@
     <result column="side" jdbcType="VARCHAR" property="side" />
     <result column="symbol" jdbcType="VARCHAR" property="symbol" />
     <result column="trader_id" jdbcType="BIGINT" property="traderId" />
-    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="p" jdbcType="DOUBLE" property="p" />
     <result column="date" jdbcType="TIMESTAMP" property="date" />
     <result column="active" jdbcType="INTEGER" property="active" />
     <result column="deadline" jdbcType="TIMESTAMP" property="deadline" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, quantity, type, side, symbol, trader_id, price, date, active, deadline
+    id, quantity, type, side, symbol, trader_id, p, date, active, deadline
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -45,11 +45,11 @@
   <insert id="insert" parameterType="com.citi.training.model.Orderdetail">
     insert into orderdetail_t (id, quantity, type, 
       side, symbol, trader_id, 
-      price, date, active, 
+      p, date, active,
       deadline)
     values (#{id,jdbcType=BIGINT}, #{quantity,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, 
       #{side,jdbcType=VARCHAR}, #{symbol,jdbcType=VARCHAR}, #{traderId,jdbcType=BIGINT}, 
-      #{price,jdbcType=DOUBLE}, #{date,jdbcType=TIMESTAMP}, #{active,jdbcType=INTEGER}, 
+      #{p,jdbcType=DOUBLE}, #{date,jdbcType=TIMESTAMP}, #{active,jdbcType=INTEGER},
       #{deadline,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.citi.training.model.Orderdetail">
@@ -73,8 +73,8 @@
       <if test="traderId != null">
         trader_id,
       </if>
-      <if test="price != null">
-        price,
+      <if test="p != null">
+        p,
       </if>
       <if test="date != null">
         date,
@@ -105,8 +105,8 @@
       <if test="traderId != null">
         #{traderId,jdbcType=BIGINT},
       </if>
-      <if test="price != null">
-        #{price,jdbcType=DOUBLE},
+      <if test="p != null">
+        #{p,jdbcType=DOUBLE},
       </if>
       <if test="date != null">
         #{date,jdbcType=TIMESTAMP},
@@ -137,8 +137,8 @@
       <if test="traderId != null">
         trader_id = #{traderId,jdbcType=BIGINT},
       </if>
-      <if test="price != null">
-        price = #{price,jdbcType=DOUBLE},
+      <if test="p != null">
+        p = #{p,jdbcType=DOUBLE},
       </if>
       <if test="date != null">
         date = #{date,jdbcType=TIMESTAMP},
@@ -159,7 +159,7 @@
       side = #{side,jdbcType=VARCHAR},
       symbol = #{symbol,jdbcType=VARCHAR},
       trader_id = #{traderId,jdbcType=BIGINT},
-      price = #{price,jdbcType=DOUBLE},
+      p = #{p,jdbcType=DOUBLE},
       date = #{date,jdbcType=TIMESTAMP},
       active = #{active,jdbcType=INTEGER},
       deadline = #{deadline,jdbcType=TIMESTAMP}
