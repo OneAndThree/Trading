@@ -30,5 +30,7 @@ public interface IOrderdetailService {
 
     public List<Map<String,String>> getOfferList(String symbol, int active);
 
+    public  List<Map<String,String>> getOrderByTraderId(Long traderId);
+
 
 }

@@ -76,6 +76,13 @@
     and symbol = #{symbol,jdbcType=VARCHAR}
   </select>
 
+  <select id="getOrderByTraderId"  resultType="hashmap">
+    select
+    <include refid="Base_Column_List" />
+    from orderdetail_t
+    where trader_id = #{traderId,jdbcType=BIGINT}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from orderdetail_t
     where id = #{id,jdbcType=BIGINT}

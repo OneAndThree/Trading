@@ -30,5 +30,7 @@ public interface OrderdetailMapper {
 
     List<Map<String,String>> getOfferList(Orderdetail record);
 
+    List<Map<String,String>> getOrderByTraderId(Long traderId);
+
 
 }

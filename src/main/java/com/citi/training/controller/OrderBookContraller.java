@@ -3,6 +3,7 @@ package com.citi.training.controller;
 import com.citi.training.model.HistoryEquityData;
 import com.citi.training.service.IHistoryEquityDataService;
 import com.citi.training.service.IOrderdetailService;
+import com.citi.training.service.ITraderService;
 import com.citi.training.utils.YahooFetchRealTimeData;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,18 +20,30 @@ public class OrderBookContraller {
 	@Resource
 	IOrderdetailService orderdetailService=null;
 
+	@Resource
+	ITraderService trader=null;
+
+
 	@ResponseBody
 	@RequestMapping(value = "/orderBookBid", method = RequestMethod.POST)
-	public List<Map<String, String>> getBitListData(String symbol, String period) {
+	public List<Map<String, String>> getBitListData(String symbol) {
 		return orderdetailService.getBitList(symbol,1);
 
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/orderBookAsk", method = RequestMethod.POST)
-	public List<Map<String, String>> getAskListData(String symbol, String period) {
+	public List<Map<String, String>> getAskListData(String symbol) {
 		return orderdetailService.getOfferList(symbol,1);
 
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "/orderBookAsk", method = RequestMethod.POST)
+	public List<Map<String, String>> getMyOrderData(String userName,String symbol) {
+		return orderdetailService.getOrderByTraderId(trader.selectByName(userName).getId());
+
+	}
+
 
 }

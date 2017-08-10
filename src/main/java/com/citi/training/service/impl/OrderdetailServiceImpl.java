@@ -99,5 +99,11 @@ public class OrderdetailServiceImpl implements IOrderdetailService {
         return orderdetailMapper.getBitList(record);
     }
 
+    @Override
+    public List<Map<String, String>> getOrderByTraderId(Long traderId) {
+        return orderdetailMapper.getOrderByTraderId(traderId);
+    }
+
+
 
 }
