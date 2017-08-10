@@ -100,8 +100,9 @@ public class TradeServiceImpl implements TradeService {
 //	}
 	public void executeTrade(TradeOrderDetail tradeOrderDetail) {
 
-		strategiesService.chooseStrateges(tradeOrderDetail.getUsername(),tradeOrderDetail.getStrategetype(),
-				String.valueOf(tradeOrderDetail.getAction()),tradeOrderDetail.getTicker(),tradeOrderDetail.getQuantity(),
+		String tradeType="Buy".equals(String.valueOf(tradeOrderDetail.getAction()))?"B":"O";
+		strategiesService.chooseStrateges(tradeOrderDetail.getUsername(),tradeOrderDetail.getStrategetype(),tradeType
+				,tradeOrderDetail.getTicker(),tradeOrderDetail.getQuantity(),
 				tradeOrderDetail.getRespectPrice(),tradeOrderDetail.getDeadline(),1);
 
 		Map<String, Portfolio> portfolioLookup =portfolioUtilsService.PortfolioUtil();

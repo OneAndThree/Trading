@@ -59,6 +59,8 @@ public class StrategiesService {
 
             stratesgeOfGTC(traderName, tradeType, symbol, quantity, price, deadline, submitted);
 
+        } else {
+            stratesgeOfM(traderName, tradeType, symbol, quantity, submitted);
         }
 
     }
