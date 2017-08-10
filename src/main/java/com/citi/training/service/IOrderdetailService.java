@@ -18,5 +18,9 @@ public interface IOrderdetailService {
 
     public int updateByPrimaryKey(Orderdetail record);
 
-    public List<Map<String,String>> getSharesInfo(Orderdetail record);
+    List<Map<String,String>> getTraderBitOrOfferList(Long traderId,String side,String symbol);
+
+    List<Map<String,String>> getBitOrOfferList(String side,String symbol);
+
+
 }

@@ -10,9 +10,11 @@
     <result column="trader_id" jdbcType="BIGINT" property="traderId" />
     <result column="price" jdbcType="DOUBLE" property="price" />
     <result column="date" jdbcType="TIMESTAMP" property="date" />
+    <result column="active" jdbcType="INTEGER" property="active" />
+    <result column="deadline" jdbcType="TIMESTAMP" property="deadline" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, quantity, type, side, symbol, trader_id, price, date
+    id, quantity, type, side, symbol, trader_id, price, date, active, deadline
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -20,14 +22,21 @@
     from orderdetail_t
     where id = #{id,jdbcType=BIGINT}
   </select>
-
-  <select id="getSharesInfo"  resultType="hashmap">
+  <select id="getBitOrOfferList"  resultType="hashmap">
     select
-    *
+    <include refid="Base_Column_List" />
     from orderdetail_t
-    where symbol = #{symbol,jdbcType=VARCHAR}
-    and trader_id= #{traderId,jdbcType=BIGINT}
+    where side = #{side,jdbcType=VARCHAR}
+    and symbol = #{symbol,jdbcType=VARCHAR}
   </select>
+    <select id="getTraderBitOrOfferList"  resultType="hashmap">
+        select
+        <include refid="Base_Column_List" />
+        from orderdetail_t
+        where side = #{side,jdbcType=VARCHAR}
+        and trader_id = #{traderId,jdbcType=BIGINT}
+        and symbol = #{symbol,jdbcType=VARCHAR}
+    </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from orderdetail_t
@@ -36,10 +45,12 @@
   <insert id="insert" parameterType="com.citi.training.model.Orderdetail">
     insert into orderdetail_t (id, quantity, type, 
       side, symbol, trader_id, 
-      price, date)
+      price, date, active, 
+      deadline)
     values (#{id,jdbcType=BIGINT}, #{quantity,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, 
       #{side,jdbcType=VARCHAR}, #{symbol,jdbcType=VARCHAR}, #{traderId,jdbcType=BIGINT}, 
-      #{price,jdbcType=DOUBLE}, #{date,jdbcType=TIMESTAMP})
+      #{price,jdbcType=DOUBLE}, #{date,jdbcType=TIMESTAMP}, #{active,jdbcType=INTEGER}, 
+      #{deadline,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.citi.training.model.Orderdetail">
     insert into orderdetail_t
@@ -68,6 +79,12 @@
       <if test="date != null">
         date,
       </if>
+      <if test="active != null">
+        active,
+      </if>
+      <if test="deadline != null">
+        deadline,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -93,6 +110,12 @@
       </if>
       <if test="date != null">
         #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="active != null">
+        #{active,jdbcType=INTEGER},
+      </if>
+      <if test="deadline != null">
+        #{deadline,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -120,6 +143,12 @@
       <if test="date != null">
         date = #{date,jdbcType=TIMESTAMP},
       </if>
+      <if test="active != null">
+        active = #{active,jdbcType=INTEGER},
+      </if>
+      <if test="deadline != null">
+        deadline = #{deadline,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -131,7 +160,9 @@
       symbol = #{symbol,jdbcType=VARCHAR},
       trader_id = #{traderId,jdbcType=BIGINT},
       price = #{price,jdbcType=DOUBLE},
-      date = #{date,jdbcType=TIMESTAMP}
+      date = #{date,jdbcType=TIMESTAMP},
+      active = #{active,jdbcType=INTEGER},
+      deadline = #{deadline,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -19,6 +19,10 @@ public class Orderdetail {
 
     private Date date;
 
+    private Integer active;
+
+    private Date deadline;
+
     public Long getId() {
         return id;
     }
@@ -81,5 +85,21 @@ public class Orderdetail {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Integer getActive() {
+        return active;
+    }
+
+    public void setActive(Integer active) {
+        this.active = active;
+    }
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
     }
 }

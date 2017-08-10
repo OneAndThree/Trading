@@ -18,5 +18,7 @@ public interface OrderdetailMapper {
 
     int updateByPrimaryKey(Orderdetail record);
 
-    List<Map<String,String>> getSharesInfo(Orderdetail record);
+    List<Map<String,String>> getTraderBitOrOfferList(Orderdetail record);
+
+    List<Map<String,String>> getBitOrOfferList(Orderdetail record);
 }
