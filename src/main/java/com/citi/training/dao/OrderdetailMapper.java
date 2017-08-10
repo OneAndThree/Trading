@@ -20,5 +20,10 @@ public interface OrderdetailMapper {
 
     List<Map<String,String>> getTraderBitOrOfferList(Orderdetail record);
 
+
+    List<Map<String,String>> getTraderBitOrOfferActiveList(Orderdetail record);
+
     List<Map<String,String>> getBitOrOfferList(Orderdetail record);
+
+
 }

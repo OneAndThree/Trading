@@ -56,11 +56,22 @@ public class OrderdetailServiceImpl implements IOrderdetailService {
     }
 
     @Override
+    public List<Map<String, String>> getTraderBitOrOfferActiveList(Long traderId, String side, String symbol, int active) {
+        Orderdetail record =new Orderdetail();
+        record.setTraderId(traderId);
+        record.setSide(side);
+        record.setSymbol(symbol);
+        record.setActive(active);
+
+        return orderdetailMapper.getTraderBitOrOfferActiveList(record);
+    }
+
+    @Override
     public List<Map<String, String>> getBitOrOfferList(String side,String symbol) {
         Orderdetail record =new Orderdetail();
         record.setSide(side);
         record.setSymbol(symbol);
-        return orderdetailMapper.getTraderBitOrOfferList(record);
+        return orderdetailMapper.getBitOrOfferList(record);
 
     }
 
