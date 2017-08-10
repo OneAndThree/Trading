@@ -24,7 +24,7 @@
             <table class="table quote-table">
                 <tr>
                     <th>Previous Close</th>
-                    <td ></td>
+                    <td data-bind="text:previous_close"></td>
                     <th>Open</th>
                     <td data-bind="text:open"></td>
                     <th>Bid</th>
