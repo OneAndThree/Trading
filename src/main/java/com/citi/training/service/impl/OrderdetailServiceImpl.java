@@ -13,7 +13,7 @@ import java.util.Map;
 public class OrderdetailServiceImpl implements IOrderdetailService {
 
     @Resource
-    OrderdetailMapper orderdetailMapper=null;
+    private OrderdetailMapper orderdetailMapper=null;
 
     @Override
     public int deleteByPrimaryKey(Long id) {
@@ -72,7 +72,6 @@ public class OrderdetailServiceImpl implements IOrderdetailService {
         record.setSide(side);
         record.setSymbol(symbol);
         return orderdetailMapper.getBitOrOfferList(record);
-
     }
 
 
