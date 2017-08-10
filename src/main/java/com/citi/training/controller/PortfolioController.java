@@ -82,7 +82,9 @@ public class PortfolioController {
 		for (Map<String, Object> orderhold : orderholds) {
 
 			HistoryEquityData historyEquityData = historyEquityDataService.getEquityData(String.valueOf(orderhold.get("symbol")),"1d");
-			JSONObject historyDataJson=JSONObject.fromObject(historyEquityData.getData());
+
+			JSONArray datas=JSONArray.fromObject(historyEquityData.getData());
+			JSONObject historyDataJson=JSONObject.fromObject(datas.get(0));
 			if (historyDataJson!=null){
 				JSONObject indicators=JSONObject.fromObject(historyDataJson.get("indicators"));
 				if(indicators!=null){
