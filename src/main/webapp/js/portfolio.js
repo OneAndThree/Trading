@@ -1,4 +1,4 @@
-function ApplicationModel(webSocketClient) {
+function MyPositionsModel(webSocketClient) {
     var self = this;
 
     self.username = ko.observable();
@@ -12,7 +12,6 @@ function ApplicationModel(webSocketClient) {
     }
 
     self.connectCallback = function (frame, stompClient) {
-        self.username(frame.headers['user-name']);
         stompClient.subscribe("/app/positions", function (message) {
             self.portfolio().loadPositions(JSON.parse(message.body));
         });
@@ -40,6 +39,49 @@ function ApplicationModel(webSocketClient) {
         window.location.href = "/logout";
     }
 }
+
+function AllPositionsModdel(webSocketClient) {
+    var self = this;
+
+    self.username = ko.observable();
+    self.portfolio = ko.observable(new PortfolioModel());
+    self.trade = ko.observable(new TradeModel(webSocketClient.getStompClient()));
+    self.notifications = ko.observableArray();
+
+    self.connect = function () {
+        var stompClient = webSocketClient.getStompClient();
+        webSocketClient.connect(self.connectCallback);
+    }
+
+    self.connectCallback = function (frame, stompClient) {
+        stompClient.subscribe("/app/allpositions", function (message) {
+            self.portfolio().loadPositions(JSON.parse(message.body));
+        })
+        stompClient.subscribe("/topic/price.stock.*", function (message) {
+            self.portfolio().processQuote(JSON.parse(message.body));
+        });
+        stompClient.subscribe("/user/queue/position-updates", function (message) {
+            self.pushNotification("Position update " + message.body);
+            self.portfolio().updatePosition(JSON.parse(message.body));
+        });
+        stompClient.subscribe("/user/queue/errors", function (message) {
+            self.pushNotification("Error " + message.body);
+        });
+    }
+
+    self.pushNotification = function (text) {
+        self.notifications.push({notification: text});
+        if (self.notifications().length > 5) {
+            self.notifications.shift();
+        }
+    }
+
+    self.logout = function () {
+        webSocketClient.disconnect();
+        window.location.href = "/logout";
+    }
+}
+
 
 function PortfolioModel() {
     var self = this;
@@ -79,7 +121,10 @@ function PortfolioModel() {
     };
 
     self.updatePosition = function (position) {
-        rowLookup[position.s].shares(position.shares);
+        console.group("updatePosition");
+        console.log(position);
+        console.groupEnd("updatePosition");
+        rowLookup[position.company].shares(position.shares);
     };
 };
 
@@ -133,9 +178,6 @@ function TradeModel(stompClient) {
     self.selectedType = ko.observable();
 
     self.showDetails = function (row) {
-        console.group("showDetails");
-        console.warn(row);
-        console.groupEnd("showDetails");
         window.location.href = "/quote?symbol=" + row.company();
     }
     self.showBuy = function (row) {
@@ -179,10 +221,10 @@ function TradeModel(stompClient) {
             "action": self.action(),
             "ticker": self.currentRow().ticker,
             "shares": self.sharesToTrade(),
-            "type": self.selectedType()
+            "strategetype": self.selectedType()
         };
 
-        // console.log(trade);
+        console.log(trade);
 
         stompClient.send("/app/tradeOrderDetail", {}, JSON.stringify(trade));
         $('#trade-dialog').modal('hide');

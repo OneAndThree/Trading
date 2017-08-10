@@ -81,7 +81,7 @@
 <script type="text/javascript">
     (function () {
         var client = new WebsocketClient("/portfolio");
-        var appModel = new ApplicationModel(client);
+        var appModel = new MyPositionsModel(client);
         ko.applyBindings(appModel);
 
         appModel.connect();

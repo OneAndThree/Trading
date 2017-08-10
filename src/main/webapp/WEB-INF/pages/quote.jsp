@@ -344,7 +344,7 @@
         }
 
         /*var stompClient = getSocketClient('/tradeOrderDetail');
-        var appModel = new ApplicationModel(stompClient);
+        var appModel = new MyPositionsModel(stompClient);
         ko.applyBindings(appModel);
         appModel.connect();*/
 //        192.168.43.124

@@ -57,11 +57,10 @@
 <script>
     (function () {
         var client = new WebsocketClient("/portfolio");
-        var appModel = new ApplicationModel(client);
+        var appModel = new AllPositionsModdel(client);
         ko.applyBindings(appModel);
-
         appModel.connect();
-        appModel.pushNotification("Trade results take a 2-3 second simulated delay. Notifications will appear.");
+
     })();
 </script>
 </body>
