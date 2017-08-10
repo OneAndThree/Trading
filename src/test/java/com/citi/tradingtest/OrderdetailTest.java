@@ -25,17 +25,9 @@ public class OrderdetailTest {
 
     @Test  
     public void test() {
-        Orderdetail ord=new Orderdetail();
-        ord.setTraderId(1L);
-        ord.setSymbol("A");
 
-        List<Map<String,String>> orderdetails= orderdetailService.getSharesInfo(ord);
-        for (Map<String,String> orderdetail:orderdetails) {
-            //euityInfo.get("symbol");
-            System.out.println( orderdetail.get("symbol"));
-        }
-        System.out.println(orderdetails);
-        logger.info("值："+orderdetails);
+        //System.out.println(orderdetails);
+        //logger.info("值："+orderdetails);
         //logger.info(JSON.toJSONString(user));  
     }
 }
