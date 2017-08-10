@@ -24,7 +24,6 @@
             <thead>
             <tr>
                 <th>Symbol</th>
-                <th>Ticker</th>
                 <th class="number">Price</th>
                 <th class="number">Change</th>
                 <th>%</th>
@@ -34,23 +33,9 @@
             <tbody data-bind="foreach: portfolio().rows">
             <tr>
                 <td><a href="#" data-bind="text: company, click: $root.trade().showDetails"></a></td>
-                <td data-bind="text: ticker"></td>
                 <td data-bind="text: formattedPrice" class="number"></td>
                 <td data-bind="text: change, style: {color: change() < 0 ? 'red' : 'green'}" class="number"></td>
                 <td data-bind="html: arrow" class="icon"></td>
-                <td class="trade-buttons">
-                    <button class="btn btn-primary" data-bind="click: $root.trade().showBuy">Buy</button>
-                    <button class="btn btn-primary" data-bind="click: $root.trade().showSell">Sell</button>
-                </td>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-                <td><a href="/quote?symbol=APA">APA</a></td>
-                <td>Ticker</td>
-                <td class="number">$45.22</td>
-                <td class="number">0.4</td>
-                <td class="icon"></td>
                 <td class="trade-buttons">
                     <button class="btn btn-primary" data-bind="click: $root.trade().showBuy">Buy</button>
                     <button class="btn btn-primary" data-bind="click: $root.trade().showSell">Sell</button>
@@ -80,8 +65,6 @@
 
 <script>
     (function () {
-        $("#nav").load("/nav");
-
         var client = new WebsocketClient("/portfolio");
         var appModel = new ApplicationModel(client);
         ko.applyBindings(appModel);

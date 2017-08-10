@@ -14,7 +14,9 @@ function ApplicationModel(webSocketClient) {
     self.connectCallback = function (frame, stompClient) {
         self.username(frame.headers['user-name']);
         stompClient.subscribe("/app/positions", function (message) {
-            console.log(message.body);
+            console.group("/app/positions");
+            console.info(message.body);
+            console.groupEnd("/app/positions");
             self.portfolio().loadPositions(JSON.parse(message.body));
         });
         stompClient.subscribe("/topic/price.stock.*", function (message) {
@@ -75,7 +77,7 @@ function PortfolioModel() {
 
     self.processQuote = function (quote) {
         if (rowLookup.hasOwnProperty(quote.ticker)) {
-            rowLookup[quote.ticker].updatePrice(quote.price);
+            rowLookup[quote.ticker].updatePrice(quote.p);
         }
     };
 
@@ -86,16 +88,28 @@ function PortfolioModel() {
 
 function PortfolioRow(data) {
     var self = this;
-
-    self.company = data.company;
+    /*self.symbol = data.s;
+    self.open =  ko.observable(data.o);
+    self.bid =  ko.observable(data.b);
+    self.ask = ko.observable(data.a);
+    self.price = ko.observable(data.p);
+    self.lastTradePrice = ko.observable(data.l1);
+    self.avgVolume = ko.observable(data.a2);
+    self.dividenYield = ko.observable(data.y);
+    self.peRatio = ko.observable(data.r);
+    self.dayRange = ko.observable(data.m);
+*/
+    self.company = ko.observable(data.company);
     self.ticker = data.ticker;
-    self.price = ko.observable(data.price);
+    self.price = ko.observable(data.p);
+
+
     self.formattedPrice = ko.computed(function () {
         return "$" + self.price().toFixed(2);
     });
     self.change = ko.observable(0);
     self.arrow = ko.observable();
-    self.shares = ko.observable(data.shares);
+    self.shares = ko.observable(0);
     self.value = ko.computed(function () {
         return (self.price() * self.shares());
     });
