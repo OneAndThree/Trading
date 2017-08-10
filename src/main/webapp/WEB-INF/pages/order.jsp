@@ -28,14 +28,19 @@
             <thead>
             <tr>
                 <th>Symbol</th>
-                <th class="number">Price</th>
-                <th class="number">Quantity</th>
+                <th>Price</th>
+                <th>Quantity</th>
                 <th>Side</th>
                 <th>Date</th>
             </tr>
             </thead>
-            <tbody>
-
+            <tbody data-bind="foreach: orderList()">
+                <td data-bind="text:symbol"></td>
+                <td data-bind="text:price"></td>
+                <td data-bind="text:quantity"></td>
+                <td data-bind="text:side"></td>
+                <td data-bind="text:date"></td>
+                <td data-bind="text:side"></td>
             </tbody>
         </table>
     </div>
@@ -48,40 +53,38 @@
 <script>
     function OrderListModel() {
         var self = this;
-        self.order = ko.observable(new Order());
+        self.orderList = ko.observableArray();
 
-        self.setOrderList = function () {
-            getOrderList();
+        self.setOrderList = function (orderList) {
+            self.orderList(orderList);
         }
     }
-    var Order = function () {
+    function OrderRow() {
         var self = this;
         self.symbol = ko.observable();
-        self.p = ko.observable();
+        self.price = ko.observable();
         self.quantity = ko.observable();
         self.side = ko.observable();
         self.date = ko.observable();
-        self.currentRow = ko.observable({});
-
-    };
+    }
     var orderList = new OrderListModel();
-    //orderList.setOrderList();
     ko.applyBindings(orderList);
     
     function getOrderList() {
-        $.ajax({
+       /* $.ajax({
             type: 'post',
             //todo? getOrderListUrl
             url: '/',
             success: function (data) {
                 console.group("getOrderList");
                 console.log(data);
+                orderList.setOrderList(data);
                 console.groupEnd("getOrderList");
             },
             error: function () {
                 console.error("getOrderList: error");
             }
-        });
+        });*/
     }
 </script>
 
