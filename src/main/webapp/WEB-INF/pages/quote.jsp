@@ -58,12 +58,12 @@
                 <th>Ask</th>
                 <th>Qty</th>
                 </thead>
-                <tbody>
+                <tbody data-bind="">
                 <tr>
-                    <td>4999</td>
-                    <td>49.99</td>
-                    <td>51.99</td>
-                    <td>4225</td>
+                    <td data-bind="bid_qty"></td>
+                    <td data-bind="bid_price"></td>
+                    <td data-bind="ask_price"></td>
+                    <td data-bind="ask_qty"></td>
                 </tr>
                 </tbody>
             </table>
@@ -94,6 +94,47 @@
         var quote = new QuoteModal();
         quote.splitData(week_data);
         ko.applyBindings(quote);
+
+        function getBidListData(symbol) {
+            $.ajax({
+                type: 'post',
+                url: '/orderBookBid',
+                data: {
+                    symbol: symbol
+                },
+                success: function (data) {
+                    console.group("getBidListData");
+                    console.log(data);
+//                    todo? set bid data
+//                    orderbook.setOrderBookList(data);
+                    console.groupEnd("getBidListData");
+                },
+                error: function () {
+                    console.error("getOrderList: error");
+                }
+            });
+        }
+
+        function getAskListData(symbol) {
+            $.ajax({
+                type: 'post',
+                url: '/orderBookAsk',
+                data: {
+                    symbol: symbol
+                },
+                success: function (data) {
+//                    console.group("getBidListData");
+                    console.log(data);
+//                    orderbook.setOrderBookList(data);
+//                    console.groupEnd("getBidListData");
+                },
+                error: function () {
+                    console.error("getOrderList: error");
+                }
+            });
+        }
+
+        getBidListData("${symbol}");
 
 
         var option = {

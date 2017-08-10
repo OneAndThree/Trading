@@ -116,7 +116,7 @@ function PortfolioModel() {
 
     self.processQuote = function (quote) {
         if (rowLookup.hasOwnProperty(quote.s)) {
-            rowLookup[quote.s].updatePrice(quote.p);
+            rowLookup[quote.s].updatePrice(quote.l1);
         }
     };
 
@@ -143,7 +143,7 @@ function PortfolioRow(data) {
 */
     self.company = ko.observable(data.company);
     self.ticker = data.ticker;
-    self.price = ko.observable(data.p);
+    self.price = ko.observable(data.l1);
 
 
     self.formattedPrice = ko.computed(function () {
@@ -224,12 +224,26 @@ function TradeModel(stompClient) {
             "strategetype": self.selectedType()
         };
 
-        console.log(trade);
+        // console.log(trade);
 
         stompClient.send("/app/tradeOrderDetail", {}, JSON.stringify(trade));
         $('#trade-dialog').modal('hide');
     }
 }
+function OrderBookModal() {
+    var self = this;
+    self.orderList = ko.observableArray();
+    self.setOrderBookList = function (orderBookList) {
+        self.orderList(orderBookList);
+    }
+}
+
+function order() {
+    var self = this;
+    self.side = ko.observable();
+    self.qty = ko.observable();
+}
+
 var QuoteModal = function () {
     var self = this;
     self.previous_close = ko.observable("N/A");
@@ -245,6 +259,7 @@ var QuoteModal = function () {
     self.instrumentType = ko.observable();
     self.change = ko.observable();
     self.arrow = ko.observable();
+    self.orderbook = ko.observable(new OrderBookModal());
 
     self.splitData = function (data) {
         var result = JSON.parse(data.result);
@@ -260,3 +275,4 @@ var QuoteModal = function () {
         self.volume(quote.indicators.quote[0].volume.pop());
     };
 };
+
