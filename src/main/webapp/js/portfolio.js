@@ -14,13 +14,9 @@ function ApplicationModel(webSocketClient) {
     self.connectCallback = function (frame, stompClient) {
         self.username(frame.headers['user-name']);
         stompClient.subscribe("/app/positions", function (message) {
-            console.group("/app/positions");
-            console.info(message.body);
-            console.groupEnd("/app/positions");
             self.portfolio().loadPositions(JSON.parse(message.body));
         });
         stompClient.subscribe("/topic/price.stock.*", function (message) {
-            console.log(JSON.parse(message.body));
             self.portfolio().processQuote(JSON.parse(message.body));
         });
         stompClient.subscribe("/user/queue/position-updates", function (message) {
@@ -105,12 +101,12 @@ function PortfolioRow(data) {
     self.price = ko.observable(data.p);
 
 
-    // self.formattedPrice = ko.computed(function () {
-    //     return "$" + self.price().toFixed(2);
-    // });
+    self.formattedPrice = ko.computed(function () {
+        return "$" + self.price();
+    });
     self.change = ko.observable(0);
     self.arrow = ko.observable();
-    self.shares = ko.observable(0);
+    self.shares = ko.observable(data.shares);
     self.value = ko.computed(function () {
         return (self.price() * self.shares());
     });
@@ -140,7 +136,7 @@ function TradeModel(stompClient) {
         console.group("showDetails");
         console.warn(row);
         console.groupEnd("showDetails");
-        window.location.href = "/quote?symbol=" + row.company;
+        window.location.href = "/quote?symbol=" + row.company();
     }
     self.showBuy = function (row) {
         self.showModal('Buy', row)

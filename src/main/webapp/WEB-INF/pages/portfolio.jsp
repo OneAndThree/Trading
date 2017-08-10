@@ -27,8 +27,7 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Company</th>
-                <th>Ticker</th>
+                <th>Symbol</th>
                 <th class="number">Price</th>
                 <th class="number">Change</th>
                 <th>%</th>
@@ -40,12 +39,12 @@
             <tbody data-bind="foreach: portfolio().rows">
             <tr>
                 <td><a href="#" data-bind="text: company, click: $root.trade().showDetails"></a></td>
-                <td data-bind="text: price" class="number"></td>
+                <td data-bind="text: formattedPrice" class="number"></td>
                 <td data-bind="text: change, style: {color: change() < 0 ? 'red' : 'green'}" class="number"></td>
                 <td data-bind="html: arrow" class="icon"></td>
                 <td data-bind="text: shares" class="number"></td>
                 <td data-bind="text: formattedValue" class="number"></td>
-                <td class="tradeOrderDetail-buttons">
+                <td class="trade-buttons">
                     <button class="btn btn-primary" data-bind="click: $root.trade().showBuy">Buy</button>
                     <button class="btn btn-primary" data-bind="click: $root.trade().showSell">Sell</button>
                 </td>
@@ -53,7 +52,7 @@
             </tbody>
             <tfoot>
             <tr>
-                <td colspan="5">Total</td>
+                <td colspan="4">Total</td>
                 <td data-bind="text: portfolio().totalShares" class="number"></td>
                 <td data-bind="text: portfolio().totalValue" class="number"></td>
                 <td></td>

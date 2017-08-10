@@ -18,7 +18,7 @@
             <h1 class="text-center">${symbol}</h1>
         </div>
         <div class="col-md-2 price_details">
-            <span class="h1" data-bind="text:previous_close"></span>
+            <h1 class="price_details" data-bind="text:previous_close"></h1>
             <ul class="list-unstyled visible-lg-inline-block">
                 <li data-bind="text:change">-6.30</li>
                 <li data-bind="text:change_percent">-0.19%</li>
@@ -50,7 +50,8 @@
         </div>
     </div>
     <div class="row">
-        <section class="col-md-10" id="k-line" style="height: 500px;"></section>
+        <section class="col-md-8" id="k-line" style="height: 500px;"></section>
+        <section class="col-md-2" id="k-line1" style="height: 500px;"></section>
         <section class="col-md-2" id="order-book">
             <table class="table">
                 <caption class="text-center h4">Order Book</caption>
@@ -101,6 +102,9 @@
         var daily_data = getHistoricalData('${symbol}', '1d');
         var week_data = getHistoricalData('${symbol}', '5d');
         var month_data = getHistoricalData('${symbol}', '1mo');
+        var daily_SplitData = getKChartData(daily_data);
+        var week_SplitData = getKChartData(week_data);
+        var month_SplitData = getKChartData(month_data);
 
         var quote = new QuoteModal(week_data);
         ko.applyBindings(quote);
@@ -114,7 +118,8 @@
                 }
             },
             legend: {
-                data: ["1K", "5D", "1M"]
+                data: ["1D", "5D", "1M"],
+                selectedMode: 'single'
             },
             grid: {
                 left: '10%',
@@ -123,7 +128,7 @@
             },
             xAxis: {
                 type: 'category',
-                data: getKChartData(month_data).categoryData,
+                data: daily_SplitData.categoryData,
                 scale: true,
                 boundaryGap: false,
                 axisLine: {onZero: false},
@@ -154,9 +159,92 @@
             ],
             series: [
                 {
-                    name: '1K',
+                    name: '1D',
+                    type: 'line',
+                    data: getKLineData(daily_SplitData.values),
+                    smooth: true,
+                    lineStyle: {
+                        normal: {opacity: 0.5}
+                    }
+                },
+                {
+                    name: '1D',
                     type: 'candlestick',
-                    data: getKChartData(daily_data).values,
+                    data: daily_SplitData.values,
+                    markPoint: {
+                        label: {
+                            normal: {
+                                formatter: function (param) {
+                                    return param != null ? Math.round(param.value) : '';
+                                }
+                            }
+                        },
+                        data: [
+                            {
+                                name: 'highest value',
+                                type: 'max',
+                                valueDim: 'highest'
+                            },
+                            {
+                                name: 'lowest value',
+                                type: 'min',
+                                valueDim: 'lowest'
+                            },
+                            {
+                                name: 'average value on close',
+                                type: 'average',
+                                valueDim: 'close'
+                            }
+                        ],
+                        tooltip: {
+                            formatter: function (param) {
+                                return param.name + '<br>' + (param.data.coord || '');
+                            }
+                        }
+                    },
+                    markLine: {
+                        symbol: ['none', 'none'],
+                        data: [
+                            [
+                                {
+                                    name: 'from lowest to highest',
+                                    type: 'min',
+                                    valueDim: 'lowest',
+                                    symbol: 'circle',
+                                    symbolSize: 10,
+                                    label: {
+                                        normal: {show: false},
+                                        emphasis: {show: false}
+                                    }
+                                },
+                                {
+                                    type: 'max',
+                                    valueDim: 'highest',
+                                    symbol: 'circle',
+                                    symbolSize: 10,
+                                    label: {
+                                        normal: {show: false},
+                                        emphasis: {show: false}
+                                    }
+                                }
+                            ],
+                            {
+                                name: 'min line on close',
+                                type: 'min',
+                                valueDim: 'close'
+                            },
+                            {
+                                name: 'max line on close',
+                                type: 'max',
+                                valueDim: 'close'
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: '5D',
+                    type: 'candlestick',
+                    data: week_SplitData.values,
                     markPoint: {
                         label: {
                             normal: {
@@ -230,7 +318,7 @@
                 {
                     name: '5D',
                     type: 'line',
-                    data: getKLineData(getKChartData(week_data).values),
+                    data: getKLineData(week_SplitData.values),
                     smooth: true,
                     lineStyle: {
                         normal: {opacity: 0.5}
@@ -239,7 +327,7 @@
                 {
                     name: '1M',
                     type: 'line',
-                    data: getKLineData(getKChartData(month_data).values),
+                    data: getKLineData(month_SplitData.values),
                     smooth: true,
                     lineStyle: {
                         normal: {opacity: 0.5}
@@ -250,6 +338,21 @@
         var kLineDom = document.getElementById("k-line");
         var kLineChart = echarts.init(kLineDom);
         kLineChart.setOption(option);
+
+
+        kLineChart.on('legendselectchanged', function (param) {
+            option.xAxis.data = changeXAxis(param.name);
+            kLineChart.setOption(option);
+//            console.log(changeXAxis(param.name));
+        });
+
+        function changeXAxis(legend) {
+            switch (legend) {
+                case '1D': return daily_SplitData.categoryData;
+                case '5D': return week_SplitData.categoryData;
+                case '1M': return month_SplitData.categoryData;
+            }
+        }
 
         /*var stompClient = getSocketClient('/tradeOrderDetail');
         var appModel = new ApplicationModel(stompClient);
