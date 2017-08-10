@@ -16,9 +16,11 @@
 package com.citi.training.model;
 
 
+import java.util.Date;
+
 public class TradeOrderDetail {
 
-	private String ticker;
+	private String ticker;// symbol
 
 	private int shares;
 
@@ -26,6 +28,55 @@ public class TradeOrderDetail {
 
 	private String username;
 
+	private double respectPrice;
+
+	private String strategetype;
+
+	private Date deadline;
+
+	private int submitStutes;
+
+	public int getSubmitStutes() {
+		return submitStutes;
+	}
+
+	public void setSubmitStutes(int submitStutes) {
+		this.submitStutes = submitStutes;
+	}
+
+	public Date getDeadline() {
+		return deadline;
+	}
+
+	public void setDeadline(Date deadline) {
+		this.deadline = deadline;
+	}
+
+	private int quantity;
+
+	public double getRespectPrice() {
+		return respectPrice;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public String getStrategetype() {
+		return strategetype;
+	}
+
+	public void setStrategetype(String strategetype) {
+		this.strategetype = strategetype;
+	}
+
+	public void setRespectPrice(double respectPrice) {
+		this.respectPrice = respectPrice;
+	}
 
 	public String getTicker() {
 		return this.ticker;

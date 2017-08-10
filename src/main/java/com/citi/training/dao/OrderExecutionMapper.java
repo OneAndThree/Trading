@@ -5,7 +5,7 @@ import com.citi.training.model.OrderExecution;
 public interface OrderExecutionMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(OrderExecution record);
+    Long insert(OrderExecution record);
 
     int insertSelective(OrderExecution record);
 
@@ -14,4 +14,6 @@ public interface OrderExecutionMapper {
     int updateByPrimaryKeySelective(OrderExecution record);
 
     int updateByPrimaryKey(OrderExecution record);
+
+    OrderExecution selectByOrderId(Long orderId);
 }

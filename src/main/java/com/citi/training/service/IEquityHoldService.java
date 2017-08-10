@@ -19,7 +19,7 @@ public interface IEquityHoldService {
 
     public int updateByPrimaryKey(EquityHhold record);
 
-    public List<Map<String,String>>  getSharesHold(Long traderid,String symbol);
+    public EquityHhold  getSharesHold(Long traderid,String symbol);
 
     public List<Map<String,Object>>  getSharesAllHold(Long traderid);
 }

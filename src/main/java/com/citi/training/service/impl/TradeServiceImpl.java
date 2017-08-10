@@ -62,6 +62,10 @@ public class TradeServiceImpl implements TradeService {
 	@Resource
 	private ITraderService traderService = null;
 
+
+	@Resource
+	StrategiesService strategiesService=null;
+
 //	@Autowired
 //	public TradeServiceImpl(SimpMessageSendingOperations messagingTemplate, PortfolioService portfolioService) {
 //		this.messagingTemplate = messagingTemplate;
@@ -95,6 +99,10 @@ public class TradeServiceImpl implements TradeService {
 //		this.tradeResults.add(new TradeResult(tradeOrderDetail.getUsername(), newPosition));
 //	}
 	public void executeTrade(TradeOrderDetail tradeOrderDetail) {
+
+		strategiesService.chooseStrateges(tradeOrderDetail.getUsername(),tradeOrderDetail.getStrategetype(),
+				String.valueOf(tradeOrderDetail.getAction()),tradeOrderDetail.getTicker(),tradeOrderDetail.getQuantity(),
+				tradeOrderDetail.getRespectPrice(),tradeOrderDetail.getDeadline(),1);
 
 		Map<String, Portfolio> portfolioLookup =portfolioUtilsService.PortfolioUtil();
 

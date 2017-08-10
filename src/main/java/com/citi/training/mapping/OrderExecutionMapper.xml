@@ -17,11 +17,22 @@
     from orderexecution_t
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+  <select id="selectByOrderId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from orderexecution_t
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from orderexecution_t
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.citi.training.model.OrderExecution">
+  <insert id="insert" parameterType="com.citi.training.model.OrderExecution" keyProperty='id'>
+    <selectKey keyProperty='id' resultType='java.lang.Long' order='AFTER'  >
+      select LAST_INSERT_ID();
+    </selectKey>
     insert into orderexecution_t (id, fills, order_id, 
       rejections, actives)
     values (#{id,jdbcType=BIGINT}, #{fills,jdbcType=INTEGER}, #{orderId,jdbcType=BIGINT}, 

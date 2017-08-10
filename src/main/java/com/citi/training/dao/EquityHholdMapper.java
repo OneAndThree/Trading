@@ -18,7 +18,7 @@ public interface EquityHholdMapper {
 
     int updateByPrimaryKey(EquityHhold record);
 
-    List<Map<String,String>>  getSharesHold(EquityHhold record);
+    EquityHhold  getSharesHold(EquityHhold record);
 
     List<Map<String,Object>>  getSharesAllHold(EquityHhold record);
 }

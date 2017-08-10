@@ -27,13 +27,12 @@ public class OrderHoldTest {
     @Test  
     public void test() {
 
-        List<Map<String,String>> orderholds= equityHoldService.getSharesHold(1L,"A");
-        for (Map<String,String> orderhold:orderholds) {
-            //euityInfo.get("symbol");
-            System.out.println( orderhold.get("symbol"));
-        }
-        System.out.println(orderholds);
-        logger.info("值："+orderholds);
+        EquityHhold orderhold= equityHoldService.getSharesHold(1L,"A");
+
+            System.out.println(orderhold.getSymbol());
+
+        System.out.println(orderhold);
+        logger.info("值："+orderhold);
         //logger.info(JSON.toJSONString(user));  
     }
 

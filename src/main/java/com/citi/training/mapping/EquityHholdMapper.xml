@@ -16,7 +16,7 @@
     from equityhold_t
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="getSharesHold"  resultType="hashmap">
+  <select id="getSharesHold"  resultMap="BaseResultMap">
     select
     *
     from equityhold_t

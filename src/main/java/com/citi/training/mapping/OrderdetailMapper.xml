@@ -30,6 +30,35 @@
     where side = #{side,jdbcType=VARCHAR}
     and symbol = #{symbol,jdbcType=VARCHAR}
   </select>
+
+  <select id="getBitOrOfferActiveList"  resultType="hashmap">
+    select
+    <include refid="Base_Column_List" />
+    from orderdetail_t
+    where side = #{side,jdbcType=VARCHAR}
+    and symbol = #{symbol,jdbcType=VARCHAR}
+    and active = #{active,jdbcType=INTEGER}
+  </select>
+  <select id="getBitList"  resultType="hashmap">
+    select
+    <include refid="Base_Column_List" />
+    from orderdetail_t
+    where side = 'B'
+    and symbol = #{symbol,jdbcType=VARCHAR}
+    and active = #{active,jdbcType=INTEGER}
+    order by price DESC
+  </select>
+
+  <select id="getOfferList"  resultType="hashmap">
+    select
+    <include refid="Base_Column_List" />
+    from orderdetail_t
+    where side = 'O'
+    and symbol = #{symbol,jdbcType=VARCHAR}
+    and active = #{active,jdbcType=INTEGER}
+    ORDER by price asc
+  </select>
+
   <select id="getTraderBitOrOfferActiveList"  resultType="hashmap">
     select
     <include refid="Base_Column_List" />
@@ -51,7 +80,10 @@
     delete from orderdetail_t
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.citi.training.model.Orderdetail">
+  <insert id="insert" parameterType="com.citi.training.model.Orderdetail" keyProperty='orderdetailid'>
+    <selectKey keyProperty='orderdetailid' resultType='java.lang.Long' order='AFTER'  >
+      select LAST_INSERT_ID();
+    </selectKey>
     insert into orderdetail_t (id, quantity, type, 
       side, symbol, trader_id, 
       price, date, active, 

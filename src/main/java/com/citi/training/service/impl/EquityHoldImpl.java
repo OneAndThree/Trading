@@ -20,36 +20,36 @@ public class EquityHoldImpl implements IEquityHoldService {
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
-        return 0;
+        return equityhold.deleteByPrimaryKey(id);
     }
 
     @Override
     public int insert(EquityHhold record) {
-        return 0;
+        return equityhold.insert(record);
     }
 
     @Override
     public int insertSelective(EquityHhold record) {
-        return 0;
+        return equityhold.insertSelective(record);
     }
 
     @Override
     public EquityHhold selectByPrimaryKey(Integer id) {
-        return null;
+        return equityhold.selectByPrimaryKey(id);
     }
 
     @Override
     public int updateByPrimaryKeySelective(EquityHhold record) {
-        return 0;
+        return equityhold.updateByPrimaryKeySelective(record);
     }
 
     @Override
     public int updateByPrimaryKey(EquityHhold record) {
-        return 0;
+        return equityhold.updateByPrimaryKey(record);
     }
 
     @Override
-    public List<Map<String, String>> getSharesHold(Long traderid, String symbol) {
+    public EquityHhold getSharesHold(Long traderid, String symbol) {
         EquityHhold record=new EquityHhold();
         record.setTraderId(traderid);
         record.setSymbol(symbol);

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.citi.training.dao.FillMapper">
+  <resultMap id="BaseResultMap" type="com.citi.training.model.Fill">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="orderexcution_id" jdbcType="BIGINT" property="orderexcutionId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, price, quantity, orderexcution_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from fill_t
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="getByExcudeId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from fill_t
+    where orderexcution_id = #{orderexcutionId,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from fill_t
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.citi.training.model.Fill">
+    insert into fill_t (id, price, quantity, 
+      orderexcution_id)
+    values (#{id,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{quantity,jdbcType=INTEGER}, 
+      #{orderexcutionId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.citi.training.model.Fill">
+    insert into fill_t
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="quantity != null">
+        quantity,
+      </if>
+      <if test="orderexcutionId != null">
+        orderexcution_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="quantity != null">
+        #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="orderexcutionId != null">
+        #{orderexcutionId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.citi.training.model.Fill">
+    update fill_t
+    <set>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="quantity != null">
+        quantity = #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="orderexcutionId != null">
+        orderexcution_id = #{orderexcutionId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.citi.training.model.Fill">
+    update fill_t
+    set price = #{price,jdbcType=DECIMAL},
+      quantity = #{quantity,jdbcType=INTEGER},
+      orderexcution_id = #{orderexcutionId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,37 +1,43 @@
 package com.citi.training.model;
 
 public class Fill {
-	private Double price;
-	private Integer quantity;
-	private OrderExecution orderExecution;
+    private Integer id;
 
-	public Double getPrice() {
-		return price;
-	}
+    private Long price;
 
-	public void setPrice(Double price) {
-		this.price = price;
-	}
+    private Integer quantity;
 
-	public Integer getQuantity() {
-		return quantity;
-	}
+    private Long orderexcutionId;
 
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public OrderExecution getOrderExecution() {
-		return orderExecution;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setOrderExecution(OrderExecution orderExecution) {
-		this.orderExecution = orderExecution;
-	}
+    public Long getPrice() {
+        return price;
+    }
 
-	@Override
-	public String toString() {
-		return "Fill [price=" + price + ", quantity=" + quantity + ", orderExecution=" + orderExecution + "]";
-	}
+    public void setPrice(Long price) {
+        this.price = price;
+    }
 
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Long getOrderexcutionId() {
+        return orderexcutionId;
+    }
+
+    public void setOrderexcutionId(Long orderexcutionId) {
+        this.orderexcutionId = orderexcutionId;
+    }
 }

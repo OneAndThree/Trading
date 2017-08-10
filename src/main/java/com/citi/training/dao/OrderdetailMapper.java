@@ -8,7 +8,7 @@ import java.util.Map;
 public interface OrderdetailMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(Orderdetail record);
+    Long insert(Orderdetail record);
 
     int insertSelective(Orderdetail record);
 
@@ -23,5 +23,12 @@ public interface OrderdetailMapper {
     List<Map<String,String>> getTraderBitOrOfferActiveList(Orderdetail record);
 
     List<Map<String,String>> getBitOrOfferList(Orderdetail record);
+
+    List<Map<String,String>> getBitOrOfferActiveList(Orderdetail record);
+
+    List<Map<String,String>> getBitList(Orderdetail record);
+
+    List<Map<String,String>> getOfferList(Orderdetail record);
+
 
 }

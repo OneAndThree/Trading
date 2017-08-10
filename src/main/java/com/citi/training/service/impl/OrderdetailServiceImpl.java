@@ -21,8 +21,8 @@ public class OrderdetailServiceImpl implements IOrderdetailService {
     }
 
     @Override
-    public int insert(Orderdetail record) {
-        return 0;
+    public Long insert(Orderdetail record) {
+        return orderdetailMapper.insert(record);
     }
 
     @Override
@@ -67,11 +67,36 @@ public class OrderdetailServiceImpl implements IOrderdetailService {
     }
 
     @Override
+    public List<Map<String, String>> getBitOrOfferActiveList(String side, String symbol, int active) {
+        Orderdetail record =new Orderdetail();
+        record.setSide(side);
+        record.setSymbol(symbol);
+        record.setActive(active);
+        return null;
+    }
+
+    @Override
     public List<Map<String, String>> getBitOrOfferList(String side,String symbol) {
         Orderdetail record =new Orderdetail();
         record.setSide(side);
         record.setSymbol(symbol);
         return orderdetailMapper.getBitOrOfferList(record);
+    }
+
+    @Override
+    public List<Map<String, String>> getBitList(String symbol, int actived) {
+        Orderdetail record =new Orderdetail();
+        record.setSymbol(symbol);
+        record.setActive(actived);
+        return orderdetailMapper.getBitList(record);
+    }
+
+    @Override
+    public List<Map<String, String>> getOfferList(String symbol, int actived) {
+        Orderdetail record =new Orderdetail();
+        record.setSymbol(symbol);
+        record.setActive(actived);
+        return orderdetailMapper.getBitList(record);
     }
 
 
