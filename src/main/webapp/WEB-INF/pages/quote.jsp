@@ -20,15 +20,15 @@
         <div class="col-md-2 price_details">
             <h1 class="price_details" data-bind="text:previous_close"></h1>
             <ul class="list-unstyled visible-lg-inline-block">
-                <li data-bind="text:change">-6.30</li>
-                <li data-bind="text:change_percent">-0.19%</li>
+                <li data-bind="text:change"></li>
+                <li data-bind="html:arrow" class="glyphicon"></li>
             </ul>
         </div>
         <div class="col-md-8">
             <table class="table">
                 <tr>
                     <th>Previous Close</th>
-                    <td data-bind="text:previous_close"></td>
+                    <td data-bind="text: previous_close"></td>
                     <th>Open</th>
                     <td data-bind="text:open"></td>
                     <th>Bid</th>
@@ -50,9 +50,8 @@
         </div>
     </div>
     <div class="row">
-        <section class="col-md-8" id="k-line" style="height: 500px;"></section>
-        <section class="col-md-2" id="k-line1" style="height: 500px;"></section>
-        <section class="col-md-2" id="order-book">
+        <section class="col-md-9" id="k-line" style="height: 500px;"></section>
+        <section class="col-md-3" id="order-book">
             <table class="table">
                 <caption class="text-center h4">Order Book</caption>
                 <thead>
@@ -63,20 +62,20 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>17</td>
-                    <td>53.55</td>
-                    <td>54.53</td>
-                    <td>13</td>
+                    <td>4999</td>
+                    <td>49.99</td>
+                    <td>51.99</td>
+                    <td>4225</td>
                 </tr>
                 <tr>
-                    <td>13</td>
-                    <td>55.16</td>
-                    <td>52.94</td>
-                    <td>21</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 <tr>
-                    <td>11</td>
-                    <td>56.81</td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -106,9 +105,10 @@
         var week_SplitData = getKChartData(week_data);
         var month_SplitData = getKChartData(month_data);
 
-        var quote = new QuoteModal(week_data);
+        var quote = new QuoteModal();
+        quote.splitData(week_data);
         ko.applyBindings(quote);
-        quote.splitData();
+
 
         var option = {
             tooltip: {

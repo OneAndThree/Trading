@@ -19,6 +19,8 @@ public class MD5Util {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(md5("123456","Alice"));
+		System.out.println(md5("123456","Danol"));
+		System.out.println(md5("123456","Shannae"));
+		System.out.println(md5("123456","Sheryl"));
 	}
 }
