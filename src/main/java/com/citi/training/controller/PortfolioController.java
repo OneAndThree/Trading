@@ -16,9 +16,12 @@
 package com.citi.training.controller;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.citi.training.model.TradeOrderDetail;
+import com.citi.training.service.impl.PortfolioUtilsService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +35,8 @@ import com.citi.training.service.PortfolioService;
 import com.citi.training.service.TradeService;
 import org.springframework.stereotype.Controller;
 
+import javax.annotation.Resource;
+
 
 @Controller
 public class PortfolioController {
@@ -43,16 +48,26 @@ public class PortfolioController {
 	private final TradeService tradeService;
 
 
+	@Resource
+	PortfolioUtilsService portfolioUtilsService=null;
+
 	@Autowired
 	public PortfolioController(PortfolioService portfolioService, TradeService tradeService) {
 		this.portfolioService = portfolioService;
 		this.tradeService = tradeService;
 	}
 
+//	@SubscribeMapping("/positions")
+//	public List<PortfolioPosition> getPositions(Principal principal) throws Exception {
+//		logger.debug("Positions for " + principal.getName());
+//		Portfolio portfolio = this.portfolioService.findPortfolio(principal.getName());
+//		return portfolio.getPositions();
+//	}
 	@SubscribeMapping("/positions")
 	public List<PortfolioPosition> getPositions(Principal principal) throws Exception {
 		logger.debug("Positions for " + principal.getName());
-		Portfolio portfolio = this.portfolioService.findPortfolio(principal.getName());
+		Map<String, Portfolio> portfolioLookup = portfolioUtilsService.PortfolioUtil();
+		Portfolio portfolio = portfolioLookup.get(principal.getName());
 		return portfolio.getPositions();
 	}
 
