@@ -88,7 +88,8 @@ public class PortfolioController {
 			if (historyDataJson!=null){
 				JSONObject indicators=JSONObject.fromObject(historyDataJson.get("indicators"));
 				if(indicators!=null){
-					JSONObject quote= JSONObject.fromObject(indicators.get("quote"));
+					JSONArray quotes=JSONArray.fromObject(indicators.get("quote"));
+					JSONObject quote=JSONObject.fromObject(quotes.get(0));
 					if(quote!=null){
 						JSONArray prices=JSONArray.fromObject(quote.get("close"));
 						price=Double.valueOf(String.valueOf(prices.get(prices.size())));
