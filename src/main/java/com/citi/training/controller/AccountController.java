@@ -47,6 +47,11 @@ public class AccountController {
         return "portfolio";
     }
 
+    @RequestMapping(value = "/order", method = RequestMethod.GET)
+    public String order() {
+        return "order";
+    }
+
     @RequestMapping(value = "/quote", method = RequestMethod.GET)
     public String getKLineByName(String symbol, ModelMap model) {
         model.addAttribute("symbol", symbol);
