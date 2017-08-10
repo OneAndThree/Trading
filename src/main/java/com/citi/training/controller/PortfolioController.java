@@ -30,6 +30,7 @@ import org.springframework.stereotype.Controller;
 
 import javax.annotation.Resource;
 import java.security.Principal;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +54,8 @@ public class PortfolioController {
 	private IEquityHoldService equityHoldService = null;
 	@Resource
 	IHistoryEquityDataService historyEquityDataService = null;
+	@Resource
+	private IEquityInfoService equityService=null;
 
 	@Autowired
 	public PortfolioController(PortfolioService portfolioService, TradeService tradeService) {
@@ -96,6 +99,39 @@ public class PortfolioController {
 			portfolio.addPosition(new PortfolioPosition(orderhold.get("symbol").toString(),
 					orderhold.get("symbol").toString(), price,
 					Integer.parseInt(String.valueOf(orderhold.get("shares")))));
+		}
+		return portfolio.getPositions();
+	}
+
+
+	@SubscribeMapping("/allpositions")
+	public List<PortfolioPosition> getAllPositions(Principal principal) throws Exception {
+		logger.debug("Positions for all" );
+
+		Trader trader=traderService.selectByName(principal.getName());
+		List<Map<String,String>> euitiesInfo= equityService.getAllEquityInfo();
+
+		Portfolio portfolio = new Portfolio();
+		double price=0.0;
+		for (int i=0;i<euitiesInfo.size();i++) {
+			HistoryEquityData historyEquityData = historyEquityDataService.getEquityData(euitiesInfo.get(i).get("symbol"),"1d");
+			JSONArray datas=JSONArray.fromObject(historyEquityData.getData());
+			JSONObject historyDataJson=JSONObject.fromObject(datas.get(0));
+			if (historyDataJson!=null){
+				JSONObject indicators=JSONObject.fromObject(historyDataJson.get("indicators"));
+				if(indicators!=null){
+					JSONArray quotes=JSONArray.fromObject(indicators.get("quote"));
+					JSONObject quote=JSONObject.fromObject(quotes.get(0));
+					if(quote!=null){
+						JSONArray prices=JSONArray.fromObject(quote.get("close"));
+						price=Double.valueOf(String.valueOf(prices.get(prices.size() - 1)));
+					}
+				}
+			}
+			//TODO 验证是否为空
+			portfolio.addPosition(new PortfolioPosition(euitiesInfo.get(i).get("symbol"),
+					euitiesInfo.get(i).get("symbol"), price,
+					0));
 		}
 		return portfolio.getPositions();
 	}
