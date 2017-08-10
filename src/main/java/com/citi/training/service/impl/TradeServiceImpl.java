@@ -16,8 +16,12 @@
 package com.citi.training.service.impl;
 
 import com.citi.training.model.TradeOrderDetail;
+import com.citi.training.model.Trader;
+import com.citi.training.service.IEquityHoldService;
+import com.citi.training.service.ITraderService;
 import com.citi.training.service.PortfolioService;
 import com.citi.training.service.TradeService;
+import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +55,12 @@ public class TradeServiceImpl implements TradeService {
 
 	@Resource
 	private PortfolioUtilsService portfolioUtilsService=null;
+
+	@Resource
+	private IEquityHoldService equityHoldService = null;
+
+	@Resource
+	private ITraderService traderService = null;
 
 //	@Autowired
 //	public TradeServiceImpl(SimpMessageSendingOperations messagingTemplate, PortfolioService portfolioService) {
@@ -88,19 +98,30 @@ public class TradeServiceImpl implements TradeService {
 
 		Map<String, Portfolio> portfolioLookup =portfolioUtilsService.PortfolioUtil();
 
+		Trader user=traderService.selectByName(tradeOrderDetail.getUsername());
+		List<Map<String, Object>> orderholds = equityHoldService.getSharesAllHold(user.getId());
+
 		Portfolio portfolio = portfolioLookup.get(tradeOrderDetail.getUsername());
+
 		String ticker = tradeOrderDetail.getTicker();
 		int sharesToTrade = tradeOrderDetail.getShares();
 
 		PortfolioPosition newPosition = (tradeOrderDetail.getAction() == TradeAction.Buy) ?
 				portfolio.buy(ticker, sharesToTrade) : portfolio.sell(ticker, sharesToTrade);
 
+
+		for (Map<String, Object> orderhold : orderholds) {
+
+			if(tradeOrderDetail.getTicker().equals(String.valueOf(orderhold.get("symbol")))){
+				newPosition.setShares(Integer.parseInt(String.valueOf(orderhold.get("shares"))));
+			}
+
+		}
 		if (newPosition == null) {
 			String payload = "Rejected tradeOrderDetail " + tradeOrderDetail;
 			this.messagingTemplate.convertAndSendToUser(tradeOrderDetail.getUsername(), "/queue/errors", payload);
 			return;
 		}
-
 		this.tradeResults.add(new TradeResult(tradeOrderDetail.getUsername(), newPosition));
 	}
 
