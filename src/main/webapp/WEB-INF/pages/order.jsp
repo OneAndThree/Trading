@@ -1,3 +1,5 @@
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -15,13 +17,12 @@
     <div id="main-content">
         <div id="heading" class="masthead">
             <div class="pull-right">
-                <span class="text-info" data-bind="text: username"><em></em></span>&nbsp;
+                <span class="text-info"><em><sec:authentication property='principal.name'/></em></span>&nbsp;
                 <button data-bind="click: logout" class="btn"><i class="glyphicon glyphicon-off"></i></button>
             </div>
             <h3 class="text-muted">Order List</h3>
         </div>
         <table class="table table-striped">
-            <caption>Order List</caption>
             <thead>
             <tr>
                 <th>Symbol</th>
@@ -43,14 +44,42 @@
 <script src="../../lib/knockout/knockout.js"></script>
 
 <script>
-    var orderList = function () {
+    function OrderListModel() {
+        var self = this;
+        self.order = ko.observable(new Order());
+
+        self.setOrderList = function () {
+            getOrderList();
+        }
+    }
+    var Order = function () {
         var self = this;
         self.symbol = ko.observable();
         self.price = ko.observable();
         self.quantity = ko.observable();
         self.side = ko.observable();
         self.date = ko.observable();
+        self.currentRow = ko.observable({});
 
+    };
+    var orderList = new OrderListModel();
+    orderList.setOrderList();
+    ko.applyBindings(orderList);
+    
+    function getOrderList() {
+        $.ajax({
+            type: 'post',
+            //todo? getOrderListUrl
+            url: '/',
+            success: function (data) {
+                console.group("getOrderList");
+                console.log(data);
+                console.groupEnd("getOrderList");
+            },
+            error: function () {
+                console.error("getOrderList: error");
+            }
+        });
     }
 </script>
 

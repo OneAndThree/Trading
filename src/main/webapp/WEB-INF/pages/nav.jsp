@@ -9,6 +9,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="/index">Market Data</a></li>
                 <li><a href="/portfolio">My Portfolio</a></li>
+                <li><a href="/order">My Order</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
