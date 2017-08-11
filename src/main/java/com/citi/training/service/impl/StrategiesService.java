@@ -316,6 +316,8 @@ public class StrategiesService {
                 equityHhold.setShares(equityHoldService.getSharesHold(traderId, symbol).getShares()+quantity);
                 int rel=equityHoldService.updateByPrimaryKeySelective(equityHhold);
                 System.out.println(rel);
+
+
             }else if(tradeType.equals(String.valueOf(BitOrOffer.O))){
                 if(equityHoldService.getSharesHold(traderId, symbol).getShares()>=quantity){
                     equityHhold.setShares(equityHoldService.getSharesHold(traderId, symbol).getShares()-quantity);

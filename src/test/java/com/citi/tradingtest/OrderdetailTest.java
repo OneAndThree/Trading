@@ -25,7 +25,10 @@ public class OrderdetailTest {
 
     @Test  
     public void test() {
-
+        List<Map<String,String>> list=orderdetailService.getOrderByTraderId(1L);
+        for (Map<String,String> orderbook:list) {
+            System.out.println( orderbook.get("symbol"));
+        }
         //System.out.println(orderdetails);
         //logger.info("值："+orderdetails);
         //logger.info(JSON.toJSONString(user));  

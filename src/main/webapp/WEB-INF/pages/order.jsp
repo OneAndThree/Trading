@@ -38,7 +38,7 @@
                 <td data-bind="text:quantity"></td>
                 <td data-bind="text:side"></td>
                 <td data-bind="text:type"></td>
-                <td data-bind="text:date"></td>
+                <td data-bind="text:formarDate()"></td>
             </tr>
             </tbody>
         </table>
@@ -61,14 +61,19 @@
             }
         }
     }
-    function OrderRow() {
+    function OrderRow(data) {
         var self = this;
-        self.symbol = ko.observable();
-        self.price = ko.observable();
-        self.quantity = ko.observable();
-        self.side = ko.observable();
-        self.date = ko.observable();
-        self.type = ko.observable();
+        self.symbol = ko.observable(data.symbol);
+        self.price = ko.observable(data.price);
+        self.quantity = ko.observable(data.quantity);
+        self.side = ko.observable(data.side);
+        self.date = ko.observable(data.date);
+        self.type = ko.observable(data.type);
+        self.formarDate = ko.computed(function() {
+            var date = new Date();
+            date.setTime(self.date()*1000);
+            return date.toUTCString();
+        });
     }
     var orderListModel = new OrderListModel();
     ko.applyBindings(orderListModel);
@@ -79,13 +84,10 @@
             //todo? getOrderListUrl
             url: '/myorder',
             data: {
-                userName: userName,
+                userName: "<sec:authentication property='principal.username'/>",
             },
             success: function (data) {
-                console.group("getOrderList");
-                console.log(data);
-//                orderList.setOrderList(data);
-                console.groupEnd("getOrderList");
+                orderListModel.setOrderList(data);
             },
             error: function () {
                 console.error("getOrderList: error");
