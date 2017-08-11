@@ -48,22 +48,31 @@
 </section>
 <article id="main" class="container quote-board">
     <div class="row">
-        <section class="col-md-9" id="k-line" style="height: 500px; padding: 20px;"></section>
-        <section class="col-md-3" id="order-book">
+        <section class="col-md-8" id="k-line" style="height: 500px; padding: 20px;"></section>
+        <section class="col-md-2" id="order-book-bid">
             <table class="table">
-                <caption class="text-center h4">Order Book</caption>
                 <thead>
                 <th>Qty</th>
                 <th>Bid</th>
+                </thead>
+                <tbody data-bind="foreach: orderbookBid().orderList">
+                <tr>
+                    <td data-bind="text:quantity"></td>
+                    <td data-bind="text:price"></td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+        <section class="col-md-2" id="order-book-ask">
+            <table class="table">
+                <thead>
                 <th>Ask</th>
                 <th>Qty</th>
                 </thead>
-                <tbody data-bind="">
+                <tbody data-bind="foreach: orderbookAsk().orderList">
                 <tr>
-                    <td data-bind="bid_qty"></td>
-                    <td data-bind="bid_price"></td>
-                    <td data-bind="ask_price"></td>
-                    <td data-bind="ask_qty"></td>
+                    <td data-bind="text: price"></td>
+                    <td data-bind="text: quantity"></td>
                 </tr>
                 </tbody>
             </table>
@@ -103,11 +112,7 @@
                     symbol: symbol
                 },
                 success: function (data) {
-                    console.group("getBidListData");
-                    console.log(data);
-//                    todo? set bid data
-//                    orderbook.setOrderBookList(data);
-                    console.groupEnd("getBidListData");
+                    quote.setOrderBookBid(data);
                 },
                 error: function () {
                     console.error("getOrderList: error");
@@ -123,10 +128,8 @@
                     symbol: symbol
                 },
                 success: function (data) {
-//                    console.group("getBidListData");
                     console.log(data);
-//                    orderbook.setOrderBookList(data);
-//                    console.groupEnd("getBidListData");
+                    quote.setOrderBookAsk(data);
                 },
                 error: function () {
                     console.error("getOrderList: error");
@@ -135,7 +138,7 @@
         }
 
         getBidListData("${symbol}");
-
+        getAskListData("${symbol}");
 
         var option = {
             tooltip: {

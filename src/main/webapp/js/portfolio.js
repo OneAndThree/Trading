@@ -130,22 +130,9 @@ function PortfolioModel() {
 
 function PortfolioRow(data) {
     var self = this;
-    /*self.symbol = data.s;
-    self.open =  ko.observable(data.o);
-    self.bid =  ko.observable(data.b);
-    self.ask = ko.observable(data.a);
-    self.price = ko.observable(data.p);
-    self.lastTradePrice = ko.observable(data.l1);
-    self.avgVolume = ko.observable(data.a2);
-    self.dividenYield = ko.observable(data.y);
-    self.peRatio = ko.observable(data.r);
-    self.dayRange = ko.observable(data.m);
-*/
     self.company = ko.observable(data.company);
     self.ticker = data.ticker;
     self.price = ko.observable(data.p);
-
-
     self.formattedPrice = ko.computed(function () {
         return "$" + self.price();
     });
@@ -230,19 +217,25 @@ function TradeModel(stompClient) {
         $('#trade-dialog').modal('hide');
     }
 }
+
 function OrderBookModal() {
     var self = this;
     self.orderList = ko.observableArray();
-    self.setOrderBookList = function (orderBookList) {
-        self.orderList(orderBookList);
-    }
+    self.setOrderBook = function (orderbook) {
+        var list = [];
+        for(var i = 0; i < orderbook.length; i++){
+            var orderItem = new OrderPriceModal(orderbook[i]);
+            list.push(orderItem);
+        }
+        console.log(list);
+        self.orderList(list);
+    };
 }
-
-function order() {
+function OrderPriceModal(order) {
     var self = this;
-    self.side = ko.observable();
-    self.qty = ko.observable();
-}
+    self.price = ko.observable(order.price);
+    self.quantity = ko.observable(order.quantity);
+};
 
 var QuoteModal = function () {
     var self = this;
@@ -259,7 +252,8 @@ var QuoteModal = function () {
     self.instrumentType = ko.observable();
     self.change = ko.observable();
     self.arrow = ko.observable();
-    self.orderbook = ko.observable(new OrderBookModal());
+    self.orderbookBid = ko.observable(new OrderBookModal());
+    self.orderbookAsk = ko.observable(new OrderBookModal());
 
     self.splitData = function (data) {
         var result = JSON.parse(data.result);
@@ -274,5 +268,16 @@ var QuoteModal = function () {
         self.close('$' + quote.indicators.quote[0].close.pop());
         self.volume(quote.indicators.quote[0].volume.pop());
     };
+
+    self.setOrderBookBid = function (orderBookList) {
+        console.log(orderBookList);
+        debugger;
+        self.orderbookBid().setOrderBook(orderBookList);
+        console.log(self.orderbookBid());
+    }
+
+    self.setOrderBookAsk = function (orderBookList) {
+        self.orderbookAsk().setOrderBook(orderBookList);
+    }
 };
 
