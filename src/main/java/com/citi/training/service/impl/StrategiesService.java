@@ -304,18 +304,18 @@ public class StrategiesService {
         return orderdetailService.getBitList(symbol, 1);
     }
 
-    public boolean buyOrSell(String traderName,String stradeType,String symbol,int quantity){
+    public boolean buyOrSell(String traderName,String tradeType,String symbol,int quantity){
 
         Long traderId=traderService.selectByName(traderName).getId();
         EquityHhold equityHhold = new EquityHhold();
         equityHhold.setSymbol(symbol);
         equityHhold.setTraderId(traderId);
         equityHhold.setId(equityHoldService.getSharesHold(traderId, symbol).getId());
-        if(stradeType.equals(String.valueOf(BitOrOffer.B))){
+        if(tradeType.equals(String.valueOf(BitOrOffer.B))){
             equityHhold.setShares(equityHoldService.getSharesHold(traderId, symbol).getShares()+quantity);
             int rel=equityHoldService.updateByPrimaryKeySelective(equityHhold);
             System.out.println(rel);
-        }else if(stradeType.equals(String.valueOf(BitOrOffer.O))){
+        }else if(tradeType.equals(String.valueOf(BitOrOffer.O))){
             if(equityHoldService.getSharesHold(traderId, symbol).getShares()>=quantity){
                 equityHhold.setShares(equityHoldService.getSharesHold(traderId, symbol).getShares()-quantity);
                 int rel=equityHoldService.updateByPrimaryKeySelective(equityHhold);

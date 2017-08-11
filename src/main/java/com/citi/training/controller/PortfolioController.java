@@ -113,7 +113,7 @@ public class PortfolioController {
 
 		Portfolio portfolio = new Portfolio();
 		double price=0.0;
-		for (int i=0;i<euitiesInfo.size();i++) {
+		for (int i=0;i<20;i++) {
 			HistoryEquityData historyEquityData = historyEquityDataService.getEquityData(euitiesInfo.get(i).get("symbol"),"1d");
 			JSONArray datas=JSONArray.fromObject(historyEquityData.getData());
 			JSONObject historyDataJson=JSONObject.fromObject(datas.get(0));

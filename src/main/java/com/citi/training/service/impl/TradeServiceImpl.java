@@ -101,7 +101,7 @@ public class TradeServiceImpl implements TradeService {
 	public void executeTrade(TradeOrderDetail tradeOrderDetail) {
 
 		String tradeType="Buy".equals(String.valueOf(tradeOrderDetail.getAction()))?"B":"O";
-		strategiesService.chooseStrateges(tradeOrderDetail.getUsername(),tradeOrderDetail.getStrategetype(),tradeType
+		strategiesService.chooseStrateges(tradeOrderDetail.getUsername(),tradeType,tradeOrderDetail.getStrategetype()
 				,tradeOrderDetail.getTicker(),tradeOrderDetail.getShares(),
 				tradeOrderDetail.getRespectPrice(),tradeOrderDetail.getDeadline(),1);
 
