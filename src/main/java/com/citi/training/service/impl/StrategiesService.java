@@ -310,15 +310,27 @@ public class StrategiesService {
         EquityHhold equityHhold = new EquityHhold();
         equityHhold.setSymbol(symbol);
         equityHhold.setTraderId(traderId);
-        equityHhold.setId(equityHoldService.getSharesHold(traderId, symbol).getId());
-        if(tradeType.equals(String.valueOf(BitOrOffer.B))){
-            equityHhold.setShares(equityHoldService.getSharesHold(traderId, symbol).getShares()+quantity);
-            int rel=equityHoldService.updateByPrimaryKeySelective(equityHhold);
-            System.out.println(rel);
-        }else if(tradeType.equals(String.valueOf(BitOrOffer.O))){
-            if(equityHoldService.getSharesHold(traderId, symbol).getShares()>=quantity){
-                equityHhold.setShares(equityHoldService.getSharesHold(traderId, symbol).getShares()-quantity);
+        if(equityHoldService.getSharesHold(traderId, symbol)!=null){
+            equityHhold.setId(equityHoldService.getSharesHold(traderId, symbol).getId());
+            if(tradeType.equals(String.valueOf(BitOrOffer.B))){
+                equityHhold.setShares(equityHoldService.getSharesHold(traderId, symbol).getShares()+quantity);
                 int rel=equityHoldService.updateByPrimaryKeySelective(equityHhold);
+                System.out.println(rel);
+            }else if(tradeType.equals(String.valueOf(BitOrOffer.O))){
+                if(equityHoldService.getSharesHold(traderId, symbol).getShares()>=quantity){
+                    equityHhold.setShares(equityHoldService.getSharesHold(traderId, symbol).getShares()-quantity);
+                    int rel=equityHoldService.updateByPrimaryKeySelective(equityHhold);
+                    System.out.println(rel);
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }else{
+            if(tradeType.equals(String.valueOf(BitOrOffer.B))){
+                equityHhold.setShares(quantity);
+                int rel=equityHoldService.insert(equityHhold);
                 System.out.println(rel);
             }else{
                 return false;
