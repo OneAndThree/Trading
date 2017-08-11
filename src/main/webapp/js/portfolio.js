@@ -116,7 +116,7 @@ function PortfolioModel() {
 
     self.processQuote = function (quote) {
         if (rowLookup.hasOwnProperty(quote.s)) {
-            rowLookup[quote.s].updatePrice(quote.l1);
+            rowLookup[quote.s].updatePrice(quote.p);
         }
     };
 
@@ -143,7 +143,7 @@ function PortfolioRow(data) {
 */
     self.company = ko.observable(data.company);
     self.ticker = data.ticker;
-    self.price = ko.observable(data.l1);
+    self.price = ko.observable(data.p);
 
 
     self.formattedPrice = ko.computed(function () {
