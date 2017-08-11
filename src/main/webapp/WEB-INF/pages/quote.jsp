@@ -14,35 +14,37 @@
 </header>
 <section class="jumbotron quote-jumbotron">
     <div class="container">
-        <div class="col-md-2">
-            <h1 class="text-center">${symbol}</h1>
-        </div>
-        <div class="col-md-2">
-            <h1 data-bind="text:previous_close"></h1>
-        </div>
-        <div class="col-md-8">
-            <table class="table quote-table">
-                <tr>
-                    <th>Previous Close</th>
-                    <td data-bind="text:previous_close"></td>
-                    <th>Open</th>
-                    <td data-bind="text:open"></td>
-                    <th>Bid</th>
-                    <td data-bind="text:bid"></td>
-                    <th>Ask</th>
-                    <td data-bind="text:ask"></td>
-                </tr>
-                <tr>
-                    <th>gmtoffset</th>
-                    <td data-bind="text:gmtoffset"></td>
-                    <th>Volume</th>
-                    <td data-bind="text:volume"></td>
-                    <th>scale</th>
-                    <td data-bind="text:scale"></td>
-                    <th>instrumentType</th>
-                    <td data-bind="text:instrumentType"></td>
-                </tr>
-            </table>
+        <div class="row">
+            <div class="col-md-2">
+                <h1 class="text-center">${symbol}</h1>
+            </div>
+            <div class="col-md-2">
+                <h1 data-bind="text:previous_close" style="font-size: 44px;"></h1>
+            </div>
+            <div class="col-md-8">
+                <table class="table quote-table">
+                    <tr>
+                        <th>Previous Close</th>
+                        <td data-bind="text:previous_close"></td>
+                        <th>Open</th>
+                        <td data-bind="text:open"></td>
+                        <th>Bid</th>
+                        <td data-bind="text:bid"></td>
+                        <th>Ask</th>
+                        <td data-bind="text:ask"></td>
+                    </tr>
+                    <tr>
+                        <th>gmtoffset</th>
+                        <td data-bind="text:gmtoffset"></td>
+                        <th>Volume</th>
+                        <td data-bind="text:volume"></td>
+                        <th>scale</th>
+                        <td data-bind="text:scale"></td>
+                        <th>instrumentType</th>
+                        <td data-bind="text:instrumentType"></td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 </section>
