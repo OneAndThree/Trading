@@ -3,7 +3,7 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="nav-header">
-            <a class="navbar-brand" href="/index">Trade</a>
+            <a class="navbar-brand" href="/index">ONE&THREE</a>
         </div>
 
         <div class="nav-collapse">
