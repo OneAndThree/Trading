@@ -40,7 +40,7 @@ public class OrderBookContraller {
 
 	@ResponseBody
 	@RequestMapping(value = "/myorder", method = RequestMethod.POST)
-	public List<Map<String, String>> getMyOrderData(String userName,String symbol) {
+	public List<Map<String, String>> getMyOrderData(String userName) {
 		return orderdetailService.getOrderByTraderId(trader.selectByName(userName).getId());
 
 	}
