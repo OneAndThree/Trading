@@ -96,7 +96,7 @@ public class OrderdetailServiceImpl implements IOrderdetailService {
         Orderdetail record =new Orderdetail();
         record.setSymbol(symbol);
         record.setActive(actived);
-        return orderdetailMapper.getBitList(record);
+        return orderdetailMapper.getOfferList(record);
     }
 
     @Override
